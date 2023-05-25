@@ -1,5 +1,5 @@
 class Personaje {
-  int id;
+  String id;
   String nombre;
   String fuerza;
   String defenza;

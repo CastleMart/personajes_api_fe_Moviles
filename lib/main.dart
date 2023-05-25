@@ -56,6 +56,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    Personaje per = Personaje("1", "Lucina", "12", "13");
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Text("Esto es un aprueba"),
+        child: Text(per.nombre),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
