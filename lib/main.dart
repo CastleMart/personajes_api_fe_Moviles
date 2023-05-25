@@ -18,12 +18,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   PersonajeController connect = new PersonajeController();
+  late Future<List<Personaje>> personajes;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    connect.getPersonajes();
+    personajes = connect.getPersonajes();
   }
 
   @override
