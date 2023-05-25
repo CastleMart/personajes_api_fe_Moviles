@@ -1,4 +1,7 @@
+//import 'dart:js_util';
+
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 
 void main() {
@@ -14,6 +17,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  PersonajeController connect = new PersonajeController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    connect.getPersonajes();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
