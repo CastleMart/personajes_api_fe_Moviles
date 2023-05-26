@@ -1,9 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 
 class Disenios {
-  static Widget atributosPersonaje(String campo, String valor) {
+  static Widget atributosPersonaje(String campo, String valor, double pad) {
     return Padding(
-      padding: const EdgeInsets.all(2.0),
+      padding: EdgeInsets.all(pad),
       child: Row(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

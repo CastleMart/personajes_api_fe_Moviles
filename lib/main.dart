@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/VerPersonaje.dart';
 
 void main() {
   runApp(const MyApp());
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
               if (snapshot.hasData) {
                 return GridView.count(
                   crossAxisCount: 2,
-                  children: _listaPersonajes(snapshot.requireData),
+                  children: _listaPersonajes(snapshot.requireData, context),
                 );
               } else if (snapshot.hasError) {
                 return Text("Error");
@@ -68,19 +69,31 @@ class _MyAppState extends State<MyApp> {
         ));
   }
 
-  List<Widget> _listaPersonajes(List<Personaje> datos) {
+  List<Widget> _listaPersonajes(List<Personaje> datos, context) {
     List<Widget> personajesWid = [];
 
     for (var item in datos) {
+      TextEditingController textos = TextEditingController(text: "guau ");
+
       personajesWid.add(Card(
           child: Column(
         children: [
+          //textos.value(TextEditingValue(text: item.nombre)),
+
           Expanded(
             child: Image.network(item.img),
           ),
-          Disenios.atributosPersonaje("Nombre", item.nombre),
-          Disenios.atributosPersonaje("Fuerza", item.fuerza),
-          Disenios.atributosPersonaje("Defenza", item.defenza),
+          Disenios.atributosPersonaje("Nombre", item.nombre, 2.0),
+          Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
+          Disenios.atributosPersonaje("Defenza", item.defenza, 2.0),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerPersonaje(item)));
+              },
+              child: Text("Ir a")),
         ],
       )));
     }
