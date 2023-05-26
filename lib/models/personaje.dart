@@ -3,6 +3,7 @@ class Personaje {
   String nombre;
   String fuerza;
   String defenza;
+  String img;
 
-  Personaje(this.id, this.nombre, this.fuerza, this.defenza);
+  Personaje(this.id, this.nombre, this.fuerza, this.defenza, this.img);
 }

@@ -76,8 +76,7 @@ class _MyAppState extends State<MyApp> {
           child: Column(
         children: [
           Expanded(
-            child: Image.network(
-                "https://th.bing.com/th/id/OIP.uF75hA4tuMt8A4PfRr0FewHaIm?pid=ImgDet&rs=1"),
+            child: Image.network(item.img),
           ),
           Disenios.atributosPersonaje("Nombre", item.nombre),
           Disenios.atributosPersonaje("Fuerza", item.fuerza),
