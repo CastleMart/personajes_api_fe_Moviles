@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
+import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 
 void main() {
@@ -51,7 +52,8 @@ class _MyAppState extends State<MyApp> {
             future: personajes,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListView(
+                return GridView.count(
+                  crossAxisCount: 2,
                   children: _listaPersonajes(snapshot.requireData),
                 );
               } else if (snapshot.hasError) {
@@ -73,7 +75,13 @@ class _MyAppState extends State<MyApp> {
       personajesWid.add(Card(
           child: Column(
         children: [
-          Padding(padding: const EdgeInsets.all(8.0), child: Text(item.nombre)),
+          Expanded(
+            child: Image.network(
+                "https://th.bing.com/th/id/OIP.uF75hA4tuMt8A4PfRr0FewHaIm?pid=ImgDet&rs=1"),
+          ),
+          Disenios.atributosPersonaje("Nombre", item.nombre),
+          Disenios.atributosPersonaje("Fuerza", item.fuerza),
+          Disenios.atributosPersonaje("Defenza", item.defenza),
         ],
       )));
     }
@@ -81,7 +89,7 @@ class _MyAppState extends State<MyApp> {
     return personajesWid;
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -122,4 +130,4 @@ class _MyHomePageState extends State<MyHomePage> {
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-}
+}*/
