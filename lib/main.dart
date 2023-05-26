@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/CrearPersonaje.dart';
 import 'package:personajes_api_fe/views/VerPersonaje.dart';
 
 void main() {
@@ -43,37 +44,45 @@ class _MyAppState extends State<MyApp> {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
         ),
         home: Scaffold(
-          appBar: AppBar(
-            title: Text("Personajes Fire Emblem"),
-          ),
-          body: FutureBuilder(
-            future: personajes,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return GridView.count(
-                  crossAxisCount: 2,
-                  children: _listaPersonajes(snapshot.requireData, context),
-                );
-              } else if (snapshot.hasError) {
-                return Text("Error");
-              }
+            appBar: AppBar(
+              title: Text("Personajes Fire Emblem"),
+            ),
+            body: Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder(
+                    future: personajes,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.count(
+                          crossAxisCount: 1,
+                          children:
+                              _listaPersonajes(snapshot.requireData, context),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("Error");
+                      }
 
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
-        ));
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+                ),
+                FutureBuilder(
+                    builder: (context, sanp) => _botonCrearPersonaje(context)),
+              ],
+            )));
   }
 
   List<Widget> _listaPersonajes(List<Personaje> datos, context) {
     List<Widget> personajesWid = [];
 
     for (var item in datos) {
-      TextEditingController textos = TextEditingController(text: "guau ");
+      //TextEditingController textos = TextEditingController(text: "guau ");
 
       personajesWid.add(Card(
           child: Column(
@@ -99,6 +108,18 @@ class _MyAppState extends State<MyApp> {
     }
 
     return personajesWid;
+  }
+
+  Widget _botonCrearPersonaje(context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CrearPersonaje()));
+          },
+          child: Text("Ingresar Personaje")),
+    );
   }
 }
 /*
