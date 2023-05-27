@@ -30,16 +30,16 @@ class PersonajeController {
 
   crearPersonaje(Personaje personaje) async {
     var url = Uri.parse(
-        'https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test');
-
-    var response = await http.post(url, body: {
+        "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test");
+    var body = {
       "idPersonaje": personaje.id,
       "Defenza": personaje.defenza,
       "Nombre": personaje.nombre,
       "Fuerza": personaje.fuerza,
       "Img": personaje.img
-    });
-
-    print('Respuesta cuerpo: ${response.body}');
+    };
+    var response = await http.post(url, body: jsonEncode(body));
+    print('Id: ${personaje.id}');
+    print('Respuesta cuerpo: ${response.statusCode}');
   }
 }

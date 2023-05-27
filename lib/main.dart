@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
                         return GridView.count(
-                          crossAxisCount: 1,
+                          crossAxisCount: 2,
                           children:
                               _listaPersonajes(snapshot.requireData, context),
                         );
