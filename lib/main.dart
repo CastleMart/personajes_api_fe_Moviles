@@ -32,6 +32,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    personajes = connect.getPersonajes();
     return MaterialApp(
         title: 'Mi aplicación',
         theme: ThemeData(
@@ -102,7 +103,7 @@ class _MyAppState extends State<MyApp> {
                     MaterialPageRoute(
                         builder: (context) => VerPersonaje(item)));
               },
-              child: Text("Ir a")),
+              child: Text("Ver")),
         ],
       )));
     }

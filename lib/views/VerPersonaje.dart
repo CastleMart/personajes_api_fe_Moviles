@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';
 
 import '../disenios.dart';
 
@@ -30,14 +31,30 @@ class VerPersonaje extends StatelessWidget {
               Disenios.atributosPersonaje("Nombre", personaje.nombre, 8.0),
               Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
               Disenios.atributosPersonaje("Defenza", personaje.defenza, 8.0),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VerPersonaje(personaje)));
-                  },
-                  child: Text("Ir a")),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ActualizarPersonaje(personaje)));
+                      },
+                      child: Text("Editar")),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ActualizarPersonaje(personaje)));
+                      },
+                      child: Text("Borrar")),
+                ],
+              ),
             ],
           ),
         ],

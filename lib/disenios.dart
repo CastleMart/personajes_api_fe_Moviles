@@ -34,4 +34,13 @@ class Disenios {
       ),
     );
   }
+
+  static void verBarraAccion(String mensaje, context) {
+    final barraBaja = SnackBar(
+        content: Text(
+      mensaje,
+      textAlign: TextAlign.center,
+    ));
+    ScaffoldMessenger.of(context).showSnackBar(barraBaja);
+  }
 }

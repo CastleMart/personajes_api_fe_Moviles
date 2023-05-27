@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import "package:http/http.dart" as http;
 
@@ -41,5 +42,24 @@ class PersonajeController {
     var response = await http.post(url, body: jsonEncode(body));
     print('Id: ${personaje.id}');
     print('Respuesta cuerpo: ${response.statusCode}');
+  }
+
+  actualizarPersonaje(Personaje personaje, context) async {
+    var url = Uri.parse(
+        "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test");
+    var body = {
+      "idPersonaje": personaje.id,
+      "Defenza": personaje.defenza,
+      "Nombre": personaje.nombre,
+      "Fuerza": personaje.fuerza,
+      "Img": personaje.img
+    };
+    var response = await http.put(url, body: jsonEncode(body));
+    print('Id: ${personaje.id}');
+    print('Respuesta cuerpo: ${response.statusCode}');
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      Disenios.verBarraAccion("Se ha actualizado", context);
+    }
   }
 }
