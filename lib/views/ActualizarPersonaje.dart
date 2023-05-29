@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 
 import '../controllers/PersonajeController.dart';
@@ -40,6 +41,7 @@ class ActualizarPersonaje extends StatelessWidget {
                     Personaje(this.personaje.id, nombreText.text,
                         fuerzaText.text, defenzaText.text, imgText.text),
                     context);
+                Navigator.pop(context);
               },
               child: Text("Actualizar"))
         ],

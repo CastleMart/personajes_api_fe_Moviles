@@ -29,7 +29,7 @@ class PersonajeController {
     return personajes;
   }
 
-  crearPersonaje(Personaje personaje) async {
+  crearPersonaje(Personaje personaje, context) async {
     var url = Uri.parse(
         "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test");
     var body = {
@@ -42,6 +42,10 @@ class PersonajeController {
     var response = await http.post(url, body: jsonEncode(body));
     print('Id: ${personaje.id}');
     print('Respuesta cuerpo: ${response.statusCode}');
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      Disenios.verBarraAccion("Se ha actualizado", context);
+    }
   }
 
   actualizarPersonaje(Personaje personaje, context) async {
@@ -60,6 +64,16 @@ class PersonajeController {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Disenios.verBarraAccion("Se ha actualizado", context);
+    }
+  }
+
+  eliminarPersonaje(String id, context) async {
+    var url = Uri.parse(
+        "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test/" + id);
+    var response = await http.delete(url);
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      Disenios.verBarraAccion("Se ha eliminado", context);
     }
   }
 }

@@ -6,7 +6,9 @@ import 'package:personajes_api_fe/models/personaje.dart';
 //void main() => runApp(const MyApp());
 
 class CrearPersonaje extends StatelessWidget {
-  const CrearPersonaje({super.key});
+  final int mayorId;
+
+  const CrearPersonaje(this.mayorId, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +17,7 @@ class CrearPersonaje extends StatelessWidget {
     TextEditingController defenzaText = TextEditingController(text: "");
     TextEditingController imgText = TextEditingController(text: "");
     PersonajeController con = PersonajeController();
+    Future<List<Personaje>> personajes = con.getPersonajes();
 
     return Scaffold(
       appBar: AppBar(
@@ -29,10 +32,18 @@ class CrearPersonaje extends StatelessWidget {
           Disenios.fieldTextDatoPersonaje(imgText, "URL Imagen"),
           ElevatedButton(
               onPressed: () {
-                con.crearPersonaje(new Personaje("a8", nombreText.text,
-                    fuerzaText.text, defenzaText.text, imgText.text));
+                con.crearPersonaje(
+                    new Personaje(
+                        (this.mayorId + 1).toString(),
+                        nombreText.text,
+                        fuerzaText.text,
+                        defenzaText.text,
+                        imgText.text),
+                    context);
+
+                Navigator.pop(context);
               },
-              child: Text("Botoncito"))
+              child: Text("Ingresar"))
         ],
       )),
     );
