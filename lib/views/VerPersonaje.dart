@@ -56,7 +56,7 @@ class VerPersonaje extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () {
                         con.eliminarPersonaje(personaje.id, context);
-                        Navigator.pop(context);
+                        //Navigator.pop(context);
                       },
                       child: Text("Borrar")),
                 ],

@@ -41,7 +41,6 @@ class ActualizarPersonaje extends StatelessWidget {
                     Personaje(this.personaje.id, nombreText.text,
                         fuerzaText.text, defenzaText.text, imgText.text),
                     context);
-                Navigator.pop(context);
               },
               child: Text("Actualizar"))
         ],

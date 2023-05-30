@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:personajes_api_fe/disenios.dart';
+import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import "package:http/http.dart" as http;
 
@@ -44,8 +46,10 @@ class PersonajeController {
     print('Respuesta cuerpo: ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      Disenios.verBarraAccion("Se ha actualizado", context);
+      Disenios.verBarraAccion("Se ha ingresado el personaje", context);
     }
+
+    Navigator.pop(context);
   }
 
   actualizarPersonaje(Personaje personaje, context) async {
@@ -65,6 +69,7 @@ class PersonajeController {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Disenios.verBarraAccion("Se ha actualizado", context);
     }
+    Navigator.pop(context);
   }
 
   eliminarPersonaje(String id, context) async {
@@ -75,5 +80,7 @@ class PersonajeController {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Disenios.verBarraAccion("Se ha eliminado", context);
     }
+
+    Navigator.pop(context);
   }
 }
