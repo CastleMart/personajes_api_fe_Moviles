@@ -30,7 +30,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    personajes = connect.getPersonajes();
   }
 
   void _reloadItems() {
@@ -45,6 +44,7 @@ class _MyAppState extends State<MyApp> {
     _reloadItems();
 
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Mi aplicación',
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
@@ -88,13 +88,10 @@ class _MyAppState extends State<MyApp> {
     List<int> id = [];
 
     for (var item in datos) {
-      //TextEditingController textos = TextEditingController(text: "guau ");
       id.add(int.parse(item.id));
       personajesWid.add(Card(
           child: Column(
         children: [
-          //textos.value(TextEditingValue(text: item.nombre)),
-
           Expanded(
             child: Image.network(
               item.img,
@@ -108,7 +105,7 @@ class _MyAppState extends State<MyApp> {
           ),
           Disenios.atributosPersonaje("Nombre", item.nombre, 2.0),
           Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
-          Disenios.atributosPersonaje("Defenza", item.defenza, 2.0),
+          Disenios.atributosPersonaje("Defensa", item.defenza, 2.0),
           ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -116,7 +113,7 @@ class _MyAppState extends State<MyApp> {
                     MaterialPageRoute(
                         builder: (context) => VerPersonaje(item)));
               },
-              child: Text("Ver")),
+              child: Text("Ver Detalles")),
         ],
       )));
     }

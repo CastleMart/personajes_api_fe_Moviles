@@ -28,7 +28,7 @@ class CrearPersonaje extends StatelessWidget {
         children: [
           Disenios.fieldTextDatoPersonaje(nombreText, "Nombre"),
           Disenios.fieldTextDatoPersonaje(fuerzaText, "Fuerza"),
-          Disenios.fieldTextDatoPersonaje(defenzaText, "Defenza"),
+          Disenios.fieldTextDatoPersonaje(defenzaText, "Defensa"),
           Disenios.fieldTextDatoPersonaje(imgText, "URL Imagen"),
           ElevatedButton(
               onPressed: () {
@@ -43,7 +43,7 @@ class CrearPersonaje extends StatelessWidget {
 
                 //Navigator.pop(context);
               },
-              child: Text("Ingresar"))
+              child: Text("Agregar"))
         ],
       )),
     );

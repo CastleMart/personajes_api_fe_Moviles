@@ -16,7 +16,7 @@ class VerPersonaje extends StatelessWidget {
     PersonajeController con = new PersonajeController();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Material App Bar'),
+        title: const Text('Detalles del personaje'),
       ),
       body: Center(
           child: Card(
@@ -39,7 +39,7 @@ class VerPersonaje extends StatelessWidget {
             children: [
               Disenios.atributosPersonaje("Nombre", personaje.nombre, 8.0),
               Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
-              Disenios.atributosPersonaje("Defenza", personaje.defenza, 8.0),
+              Disenios.atributosPersonaje("Defensa", personaje.defenza, 8.0),
               Row(
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
