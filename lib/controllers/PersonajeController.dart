@@ -10,6 +10,9 @@ class PersonajeController {
   //Future<List<Personaje>> _listaPersonajes;
   List<Personaje> personajes = [];
 
+  ///Método que regresa todos los personajes disponibles en la API.
+  ///
+  ///Devuelve como resultado [personajes]
   Future<List<Personaje>> getPersonajes() async {
     var url = Uri.parse(
         'https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test');
@@ -29,6 +32,27 @@ class PersonajeController {
     }
 
     return personajes;
+  }
+
+  Future<List<Personaje>> getPersonajeId(String id, context) async {
+    var url = Uri.parse(
+        "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test/" + id);
+    var response = await http.get(url);
+
+    final jsonData = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      Personaje personaje = Personaje(
+          jsonData["idPersonaje"],
+          jsonData["Nombre"],
+          jsonData["Fuerza"],
+          jsonData["Defenza"],
+          jsonData["Img"]);
+      print(jsonData["Nombre"]);
+      return personajes;
+    } else {
+      throw Exception("Falló la conexión.");
+    }
   }
 
   crearPersonaje(Personaje personaje, context) async {

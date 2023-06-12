@@ -1,6 +1,7 @@
 //import 'dart:js_util';
 
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/Buscador.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
@@ -24,6 +25,8 @@ class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   PersonajeController connect = new PersonajeController();
   late Future<List<Personaje>> personajes;
+  late List<Personaje> personajesFiltrados;
+  late List<Personaje> personajesLista;
   int idMayor = 0;
 
   @override
@@ -52,6 +55,16 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
             appBar: AppBar(
               title: Text("Personajes Fire Emblem"),
+              actions: [
+                Builder(
+                  builder: (context) => IconButton(
+                    onPressed: () {
+                      showSearch(context: context, delegate: Buscador());
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                ),
+              ],
             ),
             body: Column(
               children: [
