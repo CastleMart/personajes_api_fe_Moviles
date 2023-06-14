@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/VerPersonaje.dart';
 
 import '../Herramientas/TextFieldBase.dart';
 import '../common/enums.dart';

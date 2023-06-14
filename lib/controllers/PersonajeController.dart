@@ -35,7 +35,7 @@ class PersonajeController {
     return personajes;
   }
 
-  Future<List<Personaje>> getPersonajeId(String id, context) async {
+  static Future<Personaje> getPersonajeId(String id) async {
     var url = Uri.parse(
         "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test/" + id);
     var response = await http.get(url);
@@ -50,7 +50,7 @@ class PersonajeController {
           jsonData["Defenza"],
           jsonData["Img"]);
       print(jsonData["Nombre"]);
-      return personajes;
+      return personaje;
     } else {
       throw Exception("Falló la conexión.");
     }
@@ -71,7 +71,7 @@ class PersonajeController {
     print('Respuesta cuerpo: ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      Disenios.verBarraAccion("Se ha ingresado el personaje", context);
+      //Disenios.verBarraAccion("Se ha ingresado el personaje", context);
     }
     Navigator.push(
       context,
@@ -96,9 +96,8 @@ class PersonajeController {
     print('Respuesta cuerpo: ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      Disenios.verBarraAccion("Se ha actualizado", context);
+      //Disenios.verBarraAccion("Se ha actualizado", context);
     }
-    Navigator.pop(context);
   }
 
   static Future<http.Response> eliminarPersonaje(String id, context) async {
