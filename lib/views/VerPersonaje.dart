@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/Botones.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';
@@ -54,12 +55,7 @@ class VerPersonaje extends StatelessWidget {
                                     ActualizarPersonaje(personaje)));
                       },
                       child: Text("Editar")),
-                  ElevatedButton(
-                      onPressed: () {
-                        con.eliminarPersonaje(personaje.id, context);
-                        //Navigator.pop(context);
-                      },
-                      child: Text("Borrar")),
+                  Botones.botonEliminarPersonaje(context, personaje.id),
                 ],
               ),
             ],

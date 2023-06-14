@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
@@ -8,12 +9,12 @@ import "package:http/http.dart" as http;
 
 class PersonajeController {
   //Future<List<Personaje>> _listaPersonajes;
-  List<Personaje> personajes = [];
+  static List<Personaje> personajes = [];
 
   ///Método que regresa todos los personajes disponibles en la API.
   ///
   ///Devuelve como resultado [personajes]
-  Future<List<Personaje>> getPersonajes() async {
+  static Future<List<Personaje>> getPersonajes() async {
     var url = Uri.parse(
         'https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test');
     final response = await http.get(url);
@@ -72,8 +73,12 @@ class PersonajeController {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Disenios.verBarraAccion("Se ha ingresado el personaje", context);
     }
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyApp()),
+    );
 
-    Navigator.pop(context);
+    //Navigator.pop(context);
   }
 
   actualizarPersonaje(Personaje personaje, context) async {
@@ -96,15 +101,11 @@ class PersonajeController {
     Navigator.pop(context);
   }
 
-  eliminarPersonaje(String id, context) async {
+  static Future<http.Response> eliminarPersonaje(String id, context) async {
     var url = Uri.parse(
         "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test/" + id);
     var response = await http.delete(url);
 
-    if (response.statusCode >= 200 && response.statusCode < 300) {
-      Disenios.verBarraAccion("Se ha eliminado", context);
-    }
-
-    Navigator.pop(context);
+    return response;
   }
 }

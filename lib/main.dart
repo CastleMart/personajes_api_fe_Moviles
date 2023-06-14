@@ -2,12 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Buscador.dart';
+import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/disenios.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';
 import 'package:personajes_api_fe/views/CrearPersonaje.dart';
 import 'package:personajes_api_fe/views/VerPersonaje.dart';
+
+import 'Herramientas/Botones.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +27,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   PersonajeController connect = new PersonajeController();
-  late Future<List<Personaje>> personajes;
+  Future<List<Personaje>> personajes = PersonajeController.getPersonajes();
   late List<Personaje> personajesFiltrados;
   late List<Personaje> personajesLista;
   int idMayor = 0;
@@ -32,13 +35,13 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
+    personajes = PersonajeController.getPersonajes();
     super.initState();
   }
 
   void _reloadItems() {
     setState(() {
-      connect = new PersonajeController();
-      personajes = connect.getPersonajes();
+      personajes = PersonajeController.getPersonajes();
     });
   }
 
@@ -59,7 +62,7 @@ class _MyAppState extends State<MyApp> {
                 Builder(
                   builder: (context) => IconButton(
                     onPressed: () {
-                      showSearch(context: context, delegate: Buscador());
+                      //showSearch(context: context, delegate: Buscador());
                     },
                     icon: Icon(Icons.search),
                   ),
@@ -69,87 +72,20 @@ class _MyAppState extends State<MyApp> {
             body: Column(
               children: [
                 Expanded(
-                  child: FutureBuilder(
-                    future: personajes,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return GridView.count(
-                          crossAxisCount: 2,
-                          children:
-                              _listaPersonajes(snapshot.requireData, context),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text("Error");
-                      }
-
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    },
-                  ),
+                  child:
+                      EnlistarPersonajes.regresarFuturePersonajes(personajes),
                 ),
                 FutureBuilder(
-                    builder: (context, sanp) =>
-                        _botonCrearPersonaje(context, idMayor)),
+                    builder: (context, sanp) => Botones.botonCrearPersonaje(
+                        context, EnlistarPersonajes.idMayor)),
                 _botonActualizarPagina(),
               ],
             )));
   }
 
-  List<Widget> _listaPersonajes(List<Personaje> datos, context) {
-    List<Widget> personajesWid = [];
-    List<int> id = [];
-
-    for (var item in datos) {
-      id.add(int.parse(item.id));
-      personajesWid.add(Card(
-          child: Column(
-        children: [
-          Expanded(
-            child: Image.network(
-              item.img,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                // Error handling code goes here
-
-                return Text('Imagen no encontrada');
-              },
-            ),
-          ),
-          Disenios.atributosPersonaje("Nombre", item.nombre, 2.0),
-          Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
-          Disenios.atributosPersonaje("Defensa", item.defenza, 2.0),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerPersonaje(item)));
-              },
-              child: Text("Ver Detalles")),
-        ],
-      )));
-    }
-
-    idMayor = id.reduce((value, element) => value > element ? value : element);
-    print(idMayor);
-    return personajesWid;
-  }
-
-  Widget _botonCrearPersonaje(context, idMayorNum) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CrearPersonaje(idMayorNum)));
-          },
-          child: Text("Ingresar Personaje")),
-    );
-  }
-
+  /**
+   * Método que actualiza la página principal.
+   */
   Widget _botonActualizarPagina() {
     return Padding(
       padding: EdgeInsets.all(8.0),
