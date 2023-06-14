@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/Favoritos.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 
 import '../disenios.dart';
@@ -25,7 +26,7 @@ class EnlistarPersonajes {
       builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
         if (snapshot.hasData) {
           return GridView.count(
-            crossAxisCount: 2,
+            crossAxisCount: 1,
             children: _listaPersonajes(snapshot.requireData, context),
           );
         } else if (snapshot.hasError) {
@@ -52,47 +53,56 @@ class EnlistarPersonajes {
           personaje = snapshot.requireData;
           return Center(
               child: Card(
+                  elevation: 5,
+                  color: Colors.blueGrey,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
                   child: Column(
-            children: [
-              //textos.value(TextEditingValue(text: item.nombre)),
-              Expanded(
-                child: Image.network(
-                  personaje.img,
-                  errorBuilder: (BuildContext context, Object exception,
-                      StackTrace? stackTrace) {
-                    // Error handling code goes here
-                    return Text('Imagen no encontrada');
-                  },
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Disenios.atributosPersonaje("Nombre", personaje.nombre, 8.0),
-                  Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
-                  Disenios.atributosPersonaje(
-                      "Defensa", personaje.defenza, 8.0),
-                  Row(
                     mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        ActualizarPersonaje(personaje)));
+                      //textos.value(TextEditingValue(text: item.nombre)),
+                      Expanded(
+                        child: Image.network(
+                          personaje.img,
+                          errorBuilder: (BuildContext context, Object exception,
+                              StackTrace? stackTrace) {
+                            // Error handling code goes here
+                            return Text('Imagen no encontrada');
                           },
-                          child: Text("Editar")),
-                      Botones.botonEliminarPersonaje(context, personaje.id),
+                        ),
+                      ),
+                      Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Disenios.atributosPersonaje(
+                              "Nombre", personaje.nombre, 8.0),
+                          Disenios.atributosPersonaje(
+                              "Fuerza", personaje.fuerza, 8.0),
+                          Disenios.atributosPersonaje(
+                              "Defensa", personaje.defenza, 8.0),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ActualizarPersonaje(
+                                                    personaje)));
+                                  },
+                                  child: Text("Editar")),
+                              Botones.botonEliminarPersonaje(
+                                  context, personaje.id),
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
-                  ),
-                ],
-              ),
-            ],
-          )));
+                  )));
         } else if (snapshot.hasError) {
           return Text("Error");
         }
@@ -111,12 +121,27 @@ class EnlistarPersonajes {
     for (var item in datos) {
       id.add(int.parse(item.id));
       personajesWid.add(Card(
+          elevation: 8,
+          color: Color.fromARGB(255, 231, 228, 234),
+          //shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           key: UniqueKey(),
-          child: Column(
+          child: Container(
+              //padding: EdgeInsets.all(5),
+              child: Column(
             children: [
-              Text.rich(TextSpan(
-                  text: item.nombre,
-                  style: TextStyle(fontWeight: FontWeight.bold))),
+              Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text.rich(TextSpan(
+                      text: item.nombre,
+                      style: TextStyle(fontWeight: FontWeight.bold)))),
+              /*
+              FadeInImage(
+                
+                  placeholder: NetworkImage(
+                      "https://th.bing.com/th/id/R.22b7e7a5aef22403aaf97755af213977?rik=f23kFTiJ3WRemA&pid=ImgRaw&r=0"),
+                  image: NetworkImage(item.img)),
+              */
+
               Expanded(
                 child: Image.network(
                   item.img,
@@ -128,8 +153,10 @@ class EnlistarPersonajes {
                   },
                 ),
               ),
+
+              Favorito.favorito(item.id, item.favorito, context),
               //Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
-              //Disenios.atributosPersonaje("Defensa", item.defenza, 2.0),
+              //Disenios.atributosPersonaje("Defensa", item.defenza, 2.0)
               ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -139,7 +166,7 @@ class EnlistarPersonajes {
                   },
                   child: Text("Ver Detalles")),
             ],
-          )));
+          ))));
     }
 
     idMayor = id.reduce((value, element) => value > element ? value : element);

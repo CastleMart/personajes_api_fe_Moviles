@@ -49,7 +49,8 @@ class CrearPersonaje extends StatelessWidget {
                               nombreText.text,
                               fuerzaText.text,
                               defenzaText.text,
-                              imgText.text),
+                              imgText.text,
+                              false),
                           context);
                     }
 

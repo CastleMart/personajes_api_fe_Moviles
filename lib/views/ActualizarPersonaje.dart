@@ -50,8 +50,13 @@ class ActualizarPersonaje extends StatelessWidget {
                   onPressed: () {
                     if (keyForm.currentState!.validate()) {
                       con.actualizarPersonaje(
-                          Personaje(this.personaje.id, nombreText.text,
-                              fuerzaText.text, defenzaText.text, imgText.text),
+                          Personaje(
+                              this.personaje.id,
+                              nombreText.text,
+                              fuerzaText.text,
+                              defenzaText.text,
+                              imgText.text,
+                              false),
                           context);
                     }
 

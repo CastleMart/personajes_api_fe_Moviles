@@ -27,7 +27,7 @@ class PersonajeController {
 
       for (var item in jsonData) {
         personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
-            item["Fuerza"], item["Defenza"], item["Img"]));
+            item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"]));
       }
     } else {
       throw Exception("Falló la conexión.");
@@ -49,7 +49,8 @@ class PersonajeController {
           jsonData["Nombre"],
           jsonData["Fuerza"],
           jsonData["Defenza"],
-          jsonData["Img"]);
+          jsonData["Img"],
+          jsonData["Favorito"]);
       print(jsonData["Nombre"]);
       return personaje;
     } else {
@@ -95,6 +96,19 @@ class PersonajeController {
     var response = await http.put(url, body: jsonEncode(body));
     print('Id: ${personaje.id}');
     print('Respuesta cuerpo: ${response.statusCode}');
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      //Disenios.verBarraAccion("Se ha actualizado", context);
+    }
+  }
+
+  static actualizarPersonajeFavorito(String id, bool favorito) async {
+    var url = Uri.parse(
+        "https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test");
+    var body = {"idPersonaje": id, "Favorito": favorito};
+    var response = await http.put(url, body: jsonEncode(body));
+    //print('Id: ${personaje.id}');
+    //print('Respuesta cuerpo: ${response.statusCode}');
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       //Disenios.verBarraAccion("Se ha actualizado", context);
