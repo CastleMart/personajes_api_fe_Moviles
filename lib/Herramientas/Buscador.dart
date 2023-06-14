@@ -11,9 +11,10 @@ class Buscador extends SearchDelegate {
 
   Buscador() {}
 
-  static listaPersonajes() async {
-    //List<Personaje> listaPersonajes = await PersonajeController.getPersonajes();
-    return listaPersonajes;
+  static Future<List<Personaje>> listaPersonajes() {
+    PersonajeController con = PersonajeController();
+
+    return con.getPersonajes();
   }
 
   @override
@@ -40,34 +41,59 @@ class Buscador extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    final resultados = listaDeBusqueda
-        .where((element) => element.nombre.contains(query))
-        .toList();
+    return FutureBuilder<List<Personaje>>(
+      future: listaPersonajes(),
+      builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
+        if (snapshot.hasData) {
+          final resultados = query.isEmpty
+              ? []
+              : snapshot.requireData
+                  .where((element) => element.nombre
+                      .toLowerCase()
+                      .contains(query.toLowerCase()))
+                  .toList();
 
-    return ListView.builder(
-      itemCount: resultados.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(resultados[index].nombre),
-      ),
+          return ListView.builder(
+            itemCount: resultados.length,
+            itemBuilder: (context, index) => ListTile(
+              title: Text(resultados[index].nombre),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final sugerencias = query.isEmpty
-        ? []
-        : listaDeBusqueda
-            .where((element) => element.nombre.contains(query))
-            .toList();
-    return ListView.builder(
-      itemCount: sugerencias.length,
-      itemBuilder: (context, index) => ListTile(
-        title: Text(sugerencias[index]),
-        onTap: () {
-          query = sugerencias[index];
-          showResults(context);
-        },
-      ),
+    return FutureBuilder<List<Personaje>>(
+      future: listaPersonajes(),
+      builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
+        if (snapshot.hasData) {
+          final sugerencias = query.isEmpty
+              ? []
+              : snapshot.requireData
+                  .where((element) => element.nombre
+                      .toLowerCase()
+                      .contains(query.toLowerCase()))
+                  .toList();
+
+          return ListView.builder(
+            itemCount: sugerencias.length,
+            itemBuilder: (context, index) => ListTile(
+              title: Text(sugerencias[index].nombre),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
   }
 }

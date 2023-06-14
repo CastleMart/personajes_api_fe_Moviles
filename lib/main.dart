@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
                 Builder(
                   builder: (context) => IconButton(
                     onPressed: () {
-                      //showSearch(context: context, delegate: Buscador());
+                      showSearch(context: context, delegate: Buscador());
                     },
                     icon: Icon(Icons.search),
                   ),

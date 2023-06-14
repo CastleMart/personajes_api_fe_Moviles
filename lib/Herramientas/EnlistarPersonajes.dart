@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 
@@ -9,7 +11,7 @@ import 'Botones.dart';
 
 class EnlistarPersonajes {
   static int idMayor = 0;
-  static List<Personaje> personajes = [];
+  static List<Personaje> personajesList = [];
 
   EnlistarPersonajes(Future<List<Personaje>> personajes);
 
@@ -38,7 +40,7 @@ class EnlistarPersonajes {
   }
 
   /**
-   * Widget que regresa las tarjetas de los personajes acomodados.
+   * Widget que regresa una tarjeta de personaje.
    * 
    */
   static Widget regresarUnPersonaje(Future<Personaje> personajeFuture) {
