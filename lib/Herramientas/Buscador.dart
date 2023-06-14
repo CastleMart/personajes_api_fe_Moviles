@@ -6,12 +6,13 @@ import '../controllers/PersonajeController.dart';
 
 class Buscador extends SearchDelegate {
   late final List<Personaje> listaDeBusqueda;
-  final lista = PersonajeController.getPersonajes();
+  PersonajeController conn = PersonajeController();
+  //lista = conn.getPersonajes();
 
   Buscador() {}
 
   static listaPersonajes() async {
-    List<Personaje> listaPersonajes = await PersonajeController.getPersonajes();
+    //List<Personaje> listaPersonajes = await PersonajeController.getPersonajes();
     return listaPersonajes;
   }
 

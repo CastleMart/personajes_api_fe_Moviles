@@ -20,7 +20,7 @@ class CrearPersonaje extends StatelessWidget {
     TextEditingController imgText = TextEditingController(text: "");
     GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     PersonajeController con = PersonajeController();
-    Future<List<Personaje>> personajes = PersonajeController.getPersonajes();
+    //Future<List<Personaje>> personajes = con.getPersonajes();
 
     return Scaffold(
         appBar: AppBar(

@@ -35,20 +35,24 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     // TODO: implement initState
-    personajes = PersonajeController.getPersonajes();
     super.initState();
+    ObtenerPersonajes();
   }
 
-  void _reloadItems() {
+  Future<void> ObtenerPersonajes() async {
+    try {
+      personajes = connect.getPersonajes();
+    } catch (e) {
+      print(e);
+    }
+
     setState(() {
-      //personajes = PersonajeController.getPersonajes();
+      personajes = personajes;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    _reloadItems();
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Mi aplicación',
@@ -69,31 +73,22 @@ class _MyAppState extends State<MyApp> {
                 ),
               ],
             ),
-            body: Column(
-              children: [
-                Expanded(
-                  child:
-                      EnlistarPersonajes.regresarFuturePersonajes(personajes),
+            body: RefreshIndicator(
+                backgroundColor: Colors.purple,
+                color: Colors.white,
+                displacement: 20.0,
+                strokeWidth: 4,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: EnlistarPersonajes.regresarFuturePersonajes(
+                          personajes),
+                    ),
+                    FutureBuilder(
+                        builder: (context, sanp) => Botones.botonCrearPersonaje(
+                            context, EnlistarPersonajes.idMayor))
+                  ],
                 ),
-                FutureBuilder(
-                    builder: (context, sanp) => Botones.botonCrearPersonaje(
-                        context, EnlistarPersonajes.idMayor)),
-                _botonActualizarPagina(),
-              ],
-            )));
-  }
-
-  /**
-   * Método que actualiza la página principal.
-   */
-  Widget _botonActualizarPagina() {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ElevatedButton(
-          onPressed: () {
-            _reloadItems();
-          },
-          child: Text("Actualizar página")),
-    );
+                onRefresh: ObtenerPersonajes)));
   }
 }

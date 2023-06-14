@@ -9,19 +9,20 @@ import "package:http/http.dart" as http;
 
 class PersonajeController {
   //Future<List<Personaje>> _listaPersonajes;
-  static List<Personaje> personajes = [];
+  //static List<Personaje> personajes = [];
 
   ///Método que regresa todos los personajes disponibles en la API.
   ///
   ///Devuelve como resultado [personajes]
-  static Future<List<Personaje>> getPersonajes() async {
+  Future<List<Personaje>> getPersonajes() async {
+    List<Personaje> personajes = [];
     var url = Uri.parse(
         'https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       //var body = utf8.decode(response.body);
-
+      personajes = [];
       final jsonData = jsonDecode(response.body);
 
       for (var item in jsonData) {
@@ -52,7 +53,7 @@ class PersonajeController {
       print(jsonData["Nombre"]);
       return personaje;
     } else {
-      throw Exception("Falló la conexión.");
+      return throw Exception("Falló la conexión.");
     }
   }
 
