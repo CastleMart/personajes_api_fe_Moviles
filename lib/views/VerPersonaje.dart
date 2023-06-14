@@ -15,7 +15,7 @@ class VerPersonaje extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     PersonajeController con = new PersonajeController();
-    //print(con.getPersonajeId(personaje.id, context));
+    print(con.getPersonajeId(personaje.id, context));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detalles del personaje'),

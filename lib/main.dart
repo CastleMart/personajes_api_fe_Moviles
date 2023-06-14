@@ -27,7 +27,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   PersonajeController connect = new PersonajeController();
-  Future<List<Personaje>> personajes = PersonajeController.getPersonajes();
+  late Future<List<Personaje>> personajes;
   late List<Personaje> personajesFiltrados;
   late List<Personaje> personajesLista;
   int idMayor = 0;
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
 
   void _reloadItems() {
     setState(() {
-      personajes = PersonajeController.getPersonajes();
+      //personajes = PersonajeController.getPersonajes();
     });
   }
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 
+import '../Herramientas/TextFieldBase.dart';
+import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
 import '../disenios.dart';
 
@@ -14,6 +16,7 @@ class ActualizarPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     TextEditingController nombreText =
         TextEditingController(text: this.personaje.nombre);
     TextEditingController fuerzaText =
@@ -25,26 +28,37 @@ class ActualizarPersonaje extends StatelessWidget {
     PersonajeController con = PersonajeController();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Actualizar personaje'),
-      ),
-      body: Center(
-          child: Column(
-        children: [
-          Disenios.fieldTextDatoPersonaje(nombreText, "Nombre"),
-          Disenios.fieldTextDatoPersonaje(fuerzaText, "Fuerza"),
-          Disenios.fieldTextDatoPersonaje(defenzaText, "Defensa"),
-          Disenios.fieldTextDatoPersonaje(imgText, "URL Imagen"),
-          ElevatedButton(
-              onPressed: () {
-                con.actualizarPersonaje(
-                    Personaje(this.personaje.id, nombreText.text,
-                        fuerzaText.text, defenzaText.text, imgText.text),
-                    context);
-              },
-              child: Text("Actualizar"))
-        ],
-      )),
-    );
+        appBar: AppBar(
+          title: const Text('Actualizar personaje'),
+        ),
+        body: Form(
+          key: keyForm,
+          child: ListView(
+            children: [
+              TextFieldBase(
+                "Nombre",
+                nombreText,
+                validateText: ValidateText.name,
+              ),
+              TextFieldBase("Fuerza", fuerzaText,
+                  validateText: ValidateText.numValue),
+              TextFieldBase("Defensa", defenzaText,
+                  validateText: ValidateText.numValue),
+              TextFieldBase("Imagen", imgText),
+              ElevatedButton(
+                  onPressed: () {
+                    if (keyForm.currentState!.validate()) {
+                      con.actualizarPersonaje(
+                          Personaje(this.personaje.id, nombreText.text,
+                              fuerzaText.text, defenzaText.text, imgText.text),
+                          context);
+                    }
+
+                    //Navigator.pop(context);
+                  },
+                  child: Text("Agregar"))
+            ],
+          ),
+        ));
   }
 }

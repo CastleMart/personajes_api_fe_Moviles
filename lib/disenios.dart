@@ -64,4 +64,16 @@ class Disenios {
               ],
             ));
   }
+
+  static alertaError(context, id) {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              content: const Text("Complete todos los campos"),
+              actions: [
+                const CancelActionButton(), //ConfirmActionButton(),
+                ConfirmActionButton(onPressed: () => {}),
+              ],
+            ));
+  }
 }

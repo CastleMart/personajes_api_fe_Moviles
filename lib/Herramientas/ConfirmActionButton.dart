@@ -20,6 +20,6 @@ class _ConfirmActionButtonState extends State<ConfirmActionButton> {
         style: TextButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor: const Color.fromARGB(255, 104, 14, 14)),
-        child: const Text("Continuar"));
+        child: const Text("Aceptar"));
   }
 }
