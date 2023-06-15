@@ -6,15 +6,13 @@ import 'package:personajes_api_fe/main.dart';
 import '../views/CrearPersonaje.dart';
 
 class Botones {
-  static Widget botonCrearPersonaje(context, idMayorNum) {
+  static Widget botonCrearPersonaje(context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: ElevatedButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => CrearPersonaje(idMayorNum)));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CrearPersonaje()));
           },
           child: Text("Ingresar Personaje")),
     );

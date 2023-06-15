@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/Herramientas/TextFieldBase.dart';
 import 'package:personajes_api_fe/common/enums.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
@@ -8,9 +9,9 @@ import 'package:personajes_api_fe/models/personaje.dart';
 //void main() => runApp(const MyApp());
 
 class CrearPersonaje extends StatelessWidget {
-  final int mayorId;
+  //final int mayorId;
 
-  const CrearPersonaje(this.mayorId, {super.key});
+  const CrearPersonaje({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class CrearPersonaje extends StatelessWidget {
                     if (keyForm.currentState!.validate()) {
                       con.crearPersonaje(
                           new Personaje(
-                              (this.mayorId + 1).toString(),
+                              (EnlistarPersonajes.idMayor + 1).toString(),
                               nombreText.text,
                               fuerzaText.text,
                               defenzaText.text,

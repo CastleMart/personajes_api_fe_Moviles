@@ -3,9 +3,11 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Favoritos.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
+import 'package:provider/provider.dart';
 
 import '../disenios.dart';
 import '../models/personaje.dart';
+import '../providers/personajes_provider.dart';
 import '../views/ActualizarPersonaje.dart';
 import '../views/VerPersonaje.dart';
 import 'Botones.dart';
@@ -20,9 +22,9 @@ class EnlistarPersonajes {
    * Widget que regresa las tarjetas de los personajes acomodados.
    * 
    */
-  static Widget regresarFuturePersonajes(Future<List<Personaje>> personajes) {
+  static Widget regresarFuturePersonajes(BuildContext context) {
     return FutureBuilder<List<Personaje>>(
-      future: personajes,
+      future: context.watch<PersonajesProvider>().personajes,
       builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
         if (snapshot.hasData) {
           return GridView.count(
@@ -114,7 +116,8 @@ class EnlistarPersonajes {
     );
   }
 
-  static List<Widget> _listaPersonajes(List<Personaje> datos, context) {
+  static List<Widget> _listaPersonajes(
+      List<Personaje> datos, BuildContext context) {
     List<Widget> personajesWid = [];
     List<int> id = [];
 
@@ -154,7 +157,18 @@ class EnlistarPersonajes {
                 ),
               ),
 
-              Favorito.favorito(item.id, item.favorito, context),
+              //Favorito.favorito(item.id, item.favorito, context),
+              IconButton(
+                  onPressed: () {
+                    PersonajeController.actualizarPersonajeFavorito(
+                        item.id, !item.favorito);
+                    context.read<PersonajesProvider>().obtenerPersonaje();
+                  },
+                  icon: Icon(
+                    Icons.star,
+                    color: Colors.purple,
+                  )),
+
               //Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
               //Disenios.atributosPersonaje("Defensa", item.defenza, 2.0)
               ElevatedButton(
