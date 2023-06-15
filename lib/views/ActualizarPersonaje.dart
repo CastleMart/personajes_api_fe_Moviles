@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/VerPersonaje.dart';
+import 'package:provider/provider.dart';
 
 import '../Herramientas/TextFieldBase.dart';
 import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
 import '../disenios.dart';
+import '../providers/personajes_provider.dart';
 
 //void main() => runApp(const MyApp());
 
@@ -60,7 +62,7 @@ class ActualizarPersonaje extends StatelessWidget {
                           context);
                     }
 
-                    //Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   child: Text("Agregar"))
             ],

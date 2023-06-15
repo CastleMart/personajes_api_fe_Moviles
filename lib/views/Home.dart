@@ -51,9 +51,6 @@ class _HomeState extends State<Home> {
             Expanded(
               child: EnlistarPersonajes.regresarFuturePersonajes(context),
             ),
-            FutureBuilder(
-                builder: (context, sanp) =>
-                    Botones.botonCrearPersonaje(context))
           ],
         ),
         onRefresh: () async {

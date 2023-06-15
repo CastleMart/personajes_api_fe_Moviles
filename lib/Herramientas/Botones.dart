@@ -22,6 +22,7 @@ class Botones {
     return ElevatedButton(
         onPressed: () {
           Disenios.alertaBorrar(context, id);
+
           //MaterialPageRoute(builder: (context) => new MyApp());
           Navigator.pop(context);
         },

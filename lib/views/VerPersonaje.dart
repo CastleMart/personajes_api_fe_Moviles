@@ -26,8 +26,10 @@ class _VerPersonajeState extends State<VerPersonaje> {
   void initState() {
     super.initState();
     personajeId = widget.personaje.id;
-    per = PersonajeController.getPersonajeId(personajeId);
-    setState(() {});
+
+    setState(() {
+      per = PersonajeController.getPersonajeId(personajeId);
+    });
   }
 
   @override
@@ -80,6 +82,10 @@ class _VerPersonajeState extends State<VerPersonaje> {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             ActualizarPersonaje(personaje)));
+                                setState(() {
+                                  per = PersonajeController.getPersonajeId(
+                                      personajeId);
+                                });
                               },
                               child: Text("Editar")),
                           Botones.botonEliminarPersonaje(context, personaje.id),
