@@ -5,7 +5,7 @@ import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';
 
-import '../disenios.dart';
+import '../Herramientas/disenios.dart';
 
 //void main() => runApp(const VerPersonaje());
 

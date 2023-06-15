@@ -5,12 +5,12 @@ import 'package:personajes_api_fe/Herramientas/Favoritos.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:provider/provider.dart';
 
-import '../disenios.dart';
 import '../models/personaje.dart';
 import '../providers/personajes_provider.dart';
 import '../views/ActualizarPersonaje.dart';
 import '../views/VerPersonaje.dart';
 import 'Botones.dart';
+import 'disenios.dart';
 
 class EnlistarPersonajes {
   static int idMayor = 0;

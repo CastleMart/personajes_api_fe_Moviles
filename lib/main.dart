@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Buscador.dart';
 import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
-import 'package:personajes_api_fe/disenios.dart';
+
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/providers/personajes_provider.dart';
 import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';

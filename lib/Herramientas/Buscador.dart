@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/VerPersonaje.dart';
 
 import '../controllers/PersonajeController.dart';
 
@@ -42,34 +43,41 @@ class Buscador extends SearchDelegate {
   @override
   Widget buildResults(BuildContext context) {
     return FutureBuilder<List<Personaje>>(
-      future: listaPersonajes(),
-      builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
-        if (snapshot.hasData) {
-          final resultados = query.isEmpty
-              ? []
-              : snapshot.requireData
-                  .where((element) => element.nombre
-                      .toLowerCase()
-                      .contains(query.toLowerCase()))
-                  .toList();
+        future: listaPersonajes(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
+          if (snapshot.hasData) {
+            final resultados = query.isEmpty
+                ? []
+                : snapshot.requireData
+                    .where((element) => element.nombre
+                        .toLowerCase()
+                        .contains(query.toLowerCase()))
+                    .toList();
 
-          return ListView.builder(
-            itemCount: resultados.length,
-            itemBuilder: (context, index) => ListTile(
-              title: Text(resultados[index].nombre),
-            ),
-          );
-        } else if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
-    );
+            return ListView.builder(
+              itemCount: resultados.length,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(resultados[index].nombre),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return Center(
+        child: Text("Vacío"),
+      );
+    }
     return FutureBuilder<List<Personaje>>(
       future: listaPersonajes(),
       builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
@@ -85,13 +93,19 @@ class Buscador extends SearchDelegate {
           return ListView.builder(
             itemCount: sugerencias.length,
             itemBuilder: (context, index) => ListTile(
-              title: Text(sugerencias[index].nombre),
-            ),
+                title: Text(sugerencias[index].nombre),
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            VerPersonaje(sugerencias[index])))),
           );
         } else if (snapshot.hasError) {
           return Text("Error: ${snapshot.error}");
         } else {
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
       },
     );

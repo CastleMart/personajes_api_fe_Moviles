@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/CancelActionButton.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
-import 'Herramientas/ConfirmActionButton.dart';
+
+import 'ConfirmActionButton.dart';
+//import 'Herramientas/ConfirmActionButton.dart';
 
 class Disenios {
   static Widget atributosPersonaje(String campo, String valor, double pad) {

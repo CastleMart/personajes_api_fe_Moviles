@@ -3,7 +3,7 @@ import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/Herramientas/TextFieldBase.dart';
 import 'package:personajes_api_fe/common/enums.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
-import 'package:personajes_api_fe/disenios.dart';
+
 import 'package:personajes_api_fe/models/personaje.dart';
 
 //void main() => runApp(const MyApp());

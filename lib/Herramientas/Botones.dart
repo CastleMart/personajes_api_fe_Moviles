@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
-import 'package:personajes_api_fe/disenios.dart';
+
 import 'package:personajes_api_fe/main.dart';
 import '../views/CrearPersonaje.dart';
+import 'disenios.dart';
 
 class Botones {
   static Widget botonCrearPersonaje(context) {

@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import '../Herramientas/TextFieldBase.dart';
 import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
-import '../disenios.dart';
+
 import '../providers/personajes_provider.dart';
 
 //void main() => runApp(const MyApp());
