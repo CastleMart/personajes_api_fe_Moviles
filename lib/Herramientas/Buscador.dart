@@ -9,121 +9,151 @@ import '../controllers/PersonajeController.dart';
 import '../providers/personajes_provider.dart';
 
 class Buscador extends SearchDelegate {
-  late final List<Personaje> listaDeBusqueda;
+  List<Personaje> listaDeBusqueda = [];
   PersonajeController conn = PersonajeController();
-  //lista = conn.getPersonajes();
 
   Buscador() {}
 
-  //Método que devuelve la lista de personajes
   static Future<List<Personaje>> _listaPersonajes() {
     PersonajeController con = PersonajeController();
-
     return con.getPersonajes();
   }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-    // TODO: implement buildActions
     return [
       IconButton(
-          onPressed: () {
-            query = "";
-          },
-          icon: Icon(Icons.clear))
+        onPressed: () {
+          query = "";
+        },
+        icon: Icon(Icons.clear),
+      )
     ];
   }
 
   @override
   Widget? buildLeading(BuildContext context) {
-    // TODO: implement buildLeading
     return IconButton(
-        onPressed: () {
-          close(context, null);
-        },
-        icon: Icon(Icons.arrow_back));
+      onPressed: () {
+        close(context, null);
+      },
+      icon: Icon(Icons.arrow_back),
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
-    return FutureBuilder<List<Personaje>>(
-        future: _listaPersonajes(),
-        builder:
-            (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
-          if (snapshot.hasData) {
-            final resultados = query.isEmpty
-                ? []
-                : snapshot.requireData
-                    .where((element) => element.nombre
-                        .toLowerCase()
-                        .contains(query.toLowerCase()))
-                    .toList();
-
-            return ListView.builder(
-              itemCount: resultados.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(resultados[index].nombre),
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+    return Container();
   }
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    if (query.isEmpty) {
-      return Center(
-        child: Text("Vacío"),
-      );
-    }
     return FutureBuilder<List<Personaje>>(
       future: _listaPersonajes(),
-      builder: (BuildContext context, AsyncSnapshot<List<Personaje>> snapshot) {
-        if (snapshot.hasData) {
-          final sugerencias = query.isEmpty
-              ? []
-              : snapshot.requireData
-                  .where((element) => element.nombre
-                      .toLowerCase()
-                      .contains(query.trim().toLowerCase()))
-                  .toList();
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          listaDeBusqueda = snapshot.data!;
+          if (query.isEmpty) {
+            return Center(
+              child: Text("Sin contenido"),
+            );
+          }
+
+          List<Personaje> sugerencias = listaDeBusqueda.where((personaje) {
+            return personaje.nombre.toLowerCase().contains(query.toLowerCase());
+          }).toList();
+
+          if (sugerencias.isEmpty) {
+            return Center(
+              child: Text("No se encontraron resultados"),
+            );
+          }
+
           if (context.watch<PersonajesProvider>().esAdmin) {
             return ListView.builder(
               itemCount: sugerencias.length,
               itemBuilder: (context, index) => ListTile(
-                  title: Text(sugerencias[index].nombre),
-                  onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              VerPersonaje(sugerencias[index])))),
+                title: Text(sugerencias[index].nombre),
+                onTap: () {
+                  showResults(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerPersonaje(sugerencias[index]),
+                    ),
+                  );
+                },
+              ),
             );
           } else {
             return ListView.builder(
-              itemCount: sugerencias.length,
-              itemBuilder: (context, index) => ListTile(
+                itemCount: sugerencias.length,
+                itemBuilder: (context, index) {
+                  return _buildTarjeta(sugerencias[index], context,
+                      context.watch<PersonajesProvider>().esAdmin);
+
+                  /*ListTile(
                   title: Text(sugerencias[index].nombre),
-                  onTap: () => Navigator.push(
+                  onTap: () {
+                    showResults(context);
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              VerPersonajeUser(sugerencias[index])))),
-            );
+                        builder: (context) =>
+                            VerPersonajeUser(sugerencias[index]),
+                      ),
+                    );
+                  },
+                );
+              */
+                });
           }
-        } else if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        } else {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
         }
       },
+    );
+  }
+
+  Widget _buildTarjeta(
+      Personaje personaje, BuildContext context, bool tipoUsuario) {
+    return Card(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      elevation: 2,
+      child: ListTile(
+        title: Text(personaje.nombre),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Fuerza: ${personaje.fuerza}'),
+            Text('Defensa: ${personaje.defenza}'),
+          ],
+        ),
+        leading: CircleAvatar(
+          backgroundImage: NetworkImage(personaje.imgPixel),
+        ),
+        onTap: () {
+          showResults(context);
+
+          if (tipoUsuario) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VerPersonaje(personaje),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => VerPersonajeUser(personaje),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }

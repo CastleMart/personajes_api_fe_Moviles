@@ -26,7 +26,8 @@ class PersonajeController {
 
       for (var item in jsonData) {
         personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
-            item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"]));
+            item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"],
+            imgPixel: item["ImgPixel"]));
       }
     } else {
       throw Exception("Falló la conexión.");

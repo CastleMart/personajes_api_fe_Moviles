@@ -10,19 +10,18 @@ import '../models/personaje.dart';
 import '../providers/personajes_provider.dart';
 
 class Home extends StatefulWidget {
-  const Home({super.key});
+  const Home({Key? key});
 
   @override
   State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
-  PersonajeController connect = new PersonajeController();
+  PersonajeController connect = PersonajeController();
   late Future<List<Personaje>> personajes;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     obtenerPersonajes();
   }
@@ -37,47 +36,50 @@ class _HomeState extends State<Home> {
     setState(() {
       personajes = personajes;
     });
-    return Future.value();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Mi aplicación',
-        theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-        ),
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text("Personajes Fire Emblem"),
-              actions: [
-                Builder(
-                  builder: (context) => IconButton(
-                    onPressed: () {
-                      showSearch(context: context, delegate: Buscador());
-                    },
-                    icon: Icon(Icons.search),
-                  ),
+      debugShowCheckedModeBanner: false,
+      title: 'Mi aplicación',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: SafeArea(
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          appBar: AppBar(
+            title: Text("Personajes Fire Emblem"),
+            actions: [
+              Builder(
+                builder: (context) => IconButton(
+                  onPressed: () {
+                    showSearch(context: context, delegate: Buscador());
+                  },
+                  icon: Icon(Icons.search),
+                ),
+              ),
+            ],
+          ),
+          body: RefreshIndicator(
+            backgroundColor: Colors.purple,
+            color: Colors.white,
+            displacement: 20.0,
+            strokeWidth: 4,
+            child: Column(
+              children: [
+                Expanded(
+                  child: EnlistarPersonajes.regresarFuturePersonajes(context),
                 ),
               ],
             ),
-            body: RefreshIndicator(
-                backgroundColor: Colors.purple,
-                color: Colors.white,
-                displacement: 20.0,
-                strokeWidth: 4,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child:
-                          EnlistarPersonajes.regresarFuturePersonajes(context),
-                    ),
-                  ],
-                ),
-                onRefresh: () async {
-                  context.read<PersonajesProvider>().obtenerPersonaje();
-                  //print(context.watch<PersonajesProvider>().personajes);
-                })));
+            onRefresh: () async {
+              context.read<PersonajesProvider>().obtenerPersonaje();
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
