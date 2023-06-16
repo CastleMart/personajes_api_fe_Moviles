@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../Herramientas/Botones.dart';
+import '../Herramientas/Buscador.dart';
 import '../Herramientas/EnlistarPersonajes.dart';
 import '../controllers/PersonajeController.dart';
 import '../models/personaje.dart';
@@ -41,21 +42,42 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-        backgroundColor: Colors.purple,
-        color: Colors.white,
-        displacement: 20.0,
-        strokeWidth: 4,
-        child: Column(
-          children: [
-            Expanded(
-              child: EnlistarPersonajes.regresarFuturePersonajes(context),
-            ),
-          ],
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Mi aplicación',
+        theme: ThemeData(
+          primarySwatch: Colors.deepPurple,
         ),
-        onRefresh: () async {
-          context.read<PersonajesProvider>().obtenerPersonaje();
-          //print(context.watch<PersonajesProvider>().personajes);
-        });
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text("Personajes Fire Emblem"),
+              actions: [
+                Builder(
+                  builder: (context) => IconButton(
+                    onPressed: () {
+                      showSearch(context: context, delegate: Buscador());
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                ),
+              ],
+            ),
+            body: RefreshIndicator(
+                backgroundColor: Colors.purple,
+                color: Colors.white,
+                displacement: 20.0,
+                strokeWidth: 4,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child:
+                          EnlistarPersonajes.regresarFuturePersonajes(context),
+                    ),
+                  ],
+                ),
+                onRefresh: () async {
+                  context.read<PersonajesProvider>().obtenerPersonaje();
+                  //print(context.watch<PersonajesProvider>().personajes);
+                })));
   }
 }

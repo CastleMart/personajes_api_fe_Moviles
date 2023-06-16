@@ -8,16 +8,15 @@ import '../models/personaje.dart';
 class PersonajesProvider with ChangeNotifier {
   PersonajeController connect = new PersonajeController();
   late Future<List<Personaje>> _personajes = connect.getPersonajes();
-  //bool _favorito = false;
+  bool _esAdmin = false;
 
   Future<List<Personaje>> get personajes => _personajes;
-  //bool get favorito => _favorito;
-  //void set favorito(valor) => _favorito = valor;
+  bool get esAdmin => _esAdmin;
 
-  /*
-  void switchFavorito() {
-    _favorito = !_favorito;
-  }*/
+  void cambiarTipoUsuario() {
+    _esAdmin = !_esAdmin;
+    notifyListeners();
+  }
 
   void obtenerPersonaje() {
     _personajes = connect.getPersonajes();

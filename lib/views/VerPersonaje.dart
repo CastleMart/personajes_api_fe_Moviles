@@ -21,6 +21,8 @@ class VerPersonaje extends StatefulWidget {
 class _VerPersonajeState extends State<VerPersonaje> {
   late String personajeId;
   late Future<Personaje> per;
+  bool _isLoading = true;
+  late AsyncSnapshot<Personaje> snapshotGlobal;
 
   @override
   void initState() {
@@ -29,6 +31,7 @@ class _VerPersonajeState extends State<VerPersonaje> {
 
     setState(() {
       per = PersonajeController.getPersonajeId(personajeId);
+      _isLoading = false;
     });
   }
 
@@ -37,72 +40,82 @@ class _VerPersonajeState extends State<VerPersonaje> {
     PersonajeController con = new PersonajeController();
     //print(con.getPersonajeId(personaje.id, context));
     Personaje personaje;
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Detalles del personaje'),
-        ),
-        body: FutureBuilder<Personaje>(
-          future: per,
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.hasData) {
-              personaje = snapshot.requireData;
-              return Center(
-                  child: Card(
-                      child: Column(
-                children: [
-                  //textos.value(TextEditingValue(text: item.nombre)),
-                  Expanded(
-                    child: Image.network(
-                      personaje.img,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        // Error handling code goes here
-                        return Text('Imagen no encontrada');
-                      },
-                    ),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Disenios.atributosPersonaje(
-                          "Nombre", personaje.nombre, 8.0),
-                      Disenios.atributosPersonaje(
-                          "Fuerza", personaje.fuerza, 8.0),
-                      Disenios.atributosPersonaje(
-                          "Defensa", personaje.defenza, 8.0),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            ActualizarPersonaje(personaje)));
-                                setState(() {
-                                  per = PersonajeController.getPersonajeId(
-                                      personajeId);
-                                });
-                              },
-                              child: Text("Editar")),
-                          Botones.botonEliminarPersonaje(context, personaje.id),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              )));
-            } else if (snapshot.hasError) {
-              return Text("Error");
-            }
+    return Visibility(
+        visible: _isLoading,
+        replacement: Scaffold(
+            appBar: AppBar(
+              title: const Text('Detalles del personaje'),
+            ),
+            body: FutureBuilder<Personaje>(
+              future: per,
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasData) {
+                  snapshotGlobal = snapshot;
+                  personaje = snapshot.requireData;
+                  return _mostarDatos(personaje);
+                } else if (snapshot.hasError) {
+                  return Text("Error");
+                }
 
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ));
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            )),
+        child: const Center(
+            child: CircularProgressIndicator(backgroundColor: Colors.white)));
+  }
+
+  _mostarDatos(Personaje personaje) {
+    return Center(
+        child: Card(
+            child: Column(
+      children: [
+        //textos.value(TextEditingValue(text: item.nombre)),
+        Expanded(
+          child: Image.network(
+            personaje.img,
+            errorBuilder: (BuildContext context, Object exception,
+                StackTrace? stackTrace) {
+              // Error handling code goes here
+              return Text('Imagen no encontrada');
+            },
+          ),
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Disenios.atributosPersonaje("Nombre", personaje.nombre, 8.0),
+            Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
+            Disenios.atributosPersonaje("Defensa", personaje.defenza, 8.0),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: () async {
+                      await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ActualizarPersonaje(personaje)));
+                      setState(() {
+                        _isLoading = true;
+
+                        per = PersonajeController.getPersonajeId(personajeId);
+                        personaje = snapshotGlobal.requireData;
+                        _mostarDatos(personaje);
+                        _isLoading = false;
+                      });
+                    },
+                    child: Text("Editar")),
+                Botones.botonEliminarPersonaje(context, personaje.id),
+              ],
+            ),
+          ],
+        ),
+      ],
+    )));
   }
 }

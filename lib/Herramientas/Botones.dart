@@ -11,8 +11,8 @@ class Botones {
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: ElevatedButton(
-          onPressed: () {
-            Navigator.push(context,
+          onPressed: () async {
+            await Navigator.push(context,
                 MaterialPageRoute(builder: (context) => CrearPersonaje()));
           },
           child: Text("Ingresar Personaje")),
@@ -21,8 +21,8 @@ class Botones {
 
   static Widget botonEliminarPersonaje(context, id) {
     return ElevatedButton(
-        onPressed: () {
-          Disenios.alertaBorrar(context, id);
+        onPressed: () async {
+          await Disenios.alertaBorrar(context, id);
 
           //MaterialPageRoute(builder: (context) => new MyApp());
           Navigator.pop(context);

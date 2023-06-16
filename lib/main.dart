@@ -1,6 +1,7 @@
 //import 'dart:js_util';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:personajes_api_fe/Herramientas/Buscador.dart';
 import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
@@ -40,12 +41,27 @@ class _MyAppState extends State<MyApp> {
   int _paginaActual = 0;
   int idMayor = 0;
 
-  List<Widget> _paginas = [Home(), FavoritosPage(), CrearPersonaje()];
+  List<Widget> _paginasAdmin = [Home(), CrearPersonaje()];
+  List<Widget> _paginasUsuario = [Home(), FavoritosPage()];
+  List<BottomNavigationBarItem> _navAdmin = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(
+        icon: Icon(Icons.create), label: "Ingresar Personaje")
+  ];
+  List<BottomNavigationBarItem> _navUsuario = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+    BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favoritos"),
+  ];
+
+  late List<BottomNavigationBarItem> _tipoNav;
+  late List<Widget> _paginas;
 
   @override
   void initState() {
     // TODO: implement initState
+
     super.initState();
+
     ObtenerPersonajes();
   }
 
@@ -63,6 +79,13 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    if (context.watch<PersonajesProvider>().esAdmin) {
+      _tipoNav = _navAdmin;
+      _paginas = _paginasAdmin;
+    } else {
+      _tipoNav = _navUsuario;
+      _paginas = _paginasUsuario;
+    }
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mi aplicación',
@@ -70,19 +93,6 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.deepPurple,
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: Text("Personajes Fire Emblem"),
-          actions: [
-            Builder(
-              builder: (context) => IconButton(
-                onPressed: () {
-                  showSearch(context: context, delegate: Buscador());
-                },
-                icon: Icon(Icons.search),
-              ),
-            ),
-          ],
-        ),
         body: _paginas[_paginaActual],
         bottomNavigationBar: BottomNavigationBar(
             onTap: (index) {
@@ -91,13 +101,7 @@ class _MyAppState extends State<MyApp> {
               });
             },
             currentIndex: _paginaActual,
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.star), label: "Favoritos"),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.create), label: "Ingresar Personaje")
-            ]),
+            items: _tipoNav),
       ),
     );
   }

@@ -49,9 +49,9 @@ class ActualizarPersonaje extends StatelessWidget {
                   validateText: ValidateText.numValue),
               TextFieldBase("Imagen", imgText),
               ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (keyForm.currentState!.validate()) {
-                      con.actualizarPersonaje(
+                      await con.actualizarPersonaje(
                           Personaje(
                               this.personaje.id,
                               nombreText.text,

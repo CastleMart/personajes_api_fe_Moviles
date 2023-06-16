@@ -59,8 +59,9 @@ class Disenios {
               actions: [
                 const CancelActionButton(), //ConfirmActionButton(),
                 ConfirmActionButton(
-                    onPressed: () => {
-                          PersonajeController.eliminarPersonaje(id, context),
+                    onPressed: () async => {
+                          await PersonajeController.eliminarPersonaje(
+                              id, context),
                           //Navigator.pop(context)
                         }),
               ],
