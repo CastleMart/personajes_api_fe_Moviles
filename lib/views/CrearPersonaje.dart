@@ -19,48 +19,54 @@ class CrearPersonaje extends StatelessWidget {
     TextEditingController fuerzaText = TextEditingController(text: "");
     TextEditingController defenzaText = TextEditingController(text: "");
     TextEditingController imgText = TextEditingController(text: "");
+    TextEditingController imgPixelText = TextEditingController(text: "");
     GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     PersonajeController con = PersonajeController();
     //Future<List<Personaje>> personajes = con.getPersonajes();
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Introducir nuevo personaje'),
         ),
-        body: Form(
-          key: keyForm,
-          child: ListView(
-            children: [
-              TextFieldBase(
-                "Nombre",
-                nombreText,
-                validateText: ValidateText.name,
-              ),
-              TextFieldBase("Fuerza", fuerzaText,
-                  validateText: ValidateText.numValue),
-              TextFieldBase("Defensa", defenzaText,
-                  validateText: ValidateText.numValue),
-              TextFieldBase("Imagen", imgText),
-              ElevatedButton(
-                  onPressed: () {
-                    if (keyForm.currentState!.validate()) {
-                      con.crearPersonaje(
-                          new Personaje(
-                              (EnlistarPersonajes.idMayor + 1).toString(),
-                              nombreText.text,
-                              fuerzaText.text,
-                              defenzaText.text,
-                              imgText.text,
-                              false),
-                          context);
-                    }
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: keyForm,
+              child: ListView(
+                children: [
+                  TextFieldBase(
+                    "Nombre",
+                    nombreText,
+                    validateText: ValidateText.name,
+                  ),
+                  TextFieldBase("Fuerza", fuerzaText,
+                      validateText: ValidateText.numValue),
+                  TextFieldBase("Defensa", defenzaText,
+                      validateText: ValidateText.numValue),
+                  TextFieldBase("Imagen", imgText),
+                  TextFieldBase("Pixel Art", imgPixelText),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (keyForm.currentState!.validate()) {
+                          con.crearPersonaje(
+                              new Personaje(
+                                  (EnlistarPersonajes.idMayor + 1).toString(),
+                                  nombreText.text,
+                                  fuerzaText.text,
+                                  defenzaText.text,
+                                  imgText.text,
+                                  false,
+                                  imgPixel: imgPixelText.text),
+                              context);
+                        }
 
-                    //Navigator.pop(context);
-                  },
-                  child: Text("Agregar"))
-            ],
-          ),
-        ));
+                        //Navigator.pop(context);
+                      },
+                      child: Text("Agregar"))
+                ],
+              ),
+            )));
   }
 
   guardar() {}

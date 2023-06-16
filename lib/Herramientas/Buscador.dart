@@ -73,30 +73,13 @@ class Buscador extends SearchDelegate {
             );
           }
 
-          if (context.watch<PersonajesProvider>().esAdmin) {
-            return ListView.builder(
+          return ListView.builder(
               itemCount: sugerencias.length,
-              itemBuilder: (context, index) => ListTile(
-                title: Text(sugerencias[index].nombre),
-                onTap: () {
-                  showResults(context);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VerPersonaje(sugerencias[index]),
-                    ),
-                  );
-                },
-              ),
-            );
-          } else {
-            return ListView.builder(
-                itemCount: sugerencias.length,
-                itemBuilder: (context, index) {
-                  return _buildTarjeta(sugerencias[index], context,
-                      context.watch<PersonajesProvider>().esAdmin);
+              itemBuilder: (context, index) {
+                return _buildTarjeta(sugerencias[index], context,
+                    context.watch<PersonajesProvider>().esAdmin);
 
-                  /*ListTile(
+                /*ListTile(
                   title: Text(sugerencias[index].nombre),
                   onTap: () {
                     showResults(context);
@@ -110,8 +93,7 @@ class Buscador extends SearchDelegate {
                   },
                 );
               */
-                });
-          }
+              });
         }
       },
     );

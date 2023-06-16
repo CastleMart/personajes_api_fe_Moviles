@@ -26,47 +26,54 @@ class ActualizarPersonaje extends StatelessWidget {
         TextEditingController(text: this.personaje.fuerza);
     TextEditingController defenzaText =
         TextEditingController(text: this.personaje.defenza);
+    TextEditingController imgPixelText =
+        TextEditingController(text: this.personaje.imgPixel);
     TextEditingController imgText =
         TextEditingController(text: this.personaje.img);
     PersonajeController con = PersonajeController();
 
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Actualizar personaje'),
         ),
-        body: Form(
-          key: keyForm,
-          child: ListView(
-            children: [
-              TextFieldBase(
-                "Nombre",
-                nombreText,
-                validateText: ValidateText.name,
-              ),
-              TextFieldBase("Fuerza", fuerzaText,
-                  validateText: ValidateText.numValue),
-              TextFieldBase("Defensa", defenzaText,
-                  validateText: ValidateText.numValue),
-              TextFieldBase("Imagen", imgText),
-              ElevatedButton(
-                  onPressed: () async {
-                    if (keyForm.currentState!.validate()) {
-                      await con.actualizarPersonaje(
-                          Personaje(
-                              this.personaje.id,
-                              nombreText.text,
-                              fuerzaText.text,
-                              defenzaText.text,
-                              imgText.text,
-                              false),
-                          context);
-                    }
+        body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: keyForm,
+              child: ListView(
+                children: [
+                  TextFieldBase(
+                    "Nombre",
+                    nombreText,
+                    validateText: ValidateText.name,
+                  ),
+                  TextFieldBase("Fuerza", fuerzaText,
+                      validateText: ValidateText.numValue),
+                  TextFieldBase("Defensa", defenzaText,
+                      validateText: ValidateText.numValue),
+                  TextFieldBase("Imagen", imgText),
+                  TextFieldBase("Pixel Art", imgPixelText),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (keyForm.currentState!.validate()) {
+                          await con.actualizarPersonaje(
+                              Personaje(
+                                  this.personaje.id,
+                                  nombreText.text,
+                                  fuerzaText.text,
+                                  defenzaText.text,
+                                  imgText.text,
+                                  false,
+                                  imgPixel: imgPixelText.text),
+                              context);
+                        }
 
-                    Navigator.pop(context);
-                  },
-                  child: Text("Agregar"))
-            ],
-          ),
-        ));
+                        Navigator.pop(context);
+                      },
+                      child: Text("Agregar"))
+                ],
+              ),
+            )));
   }
 }

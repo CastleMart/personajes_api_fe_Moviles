@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.deepPurple,
       ),
       home: Scaffold(
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: _paginas[_paginaActual],
         bottomNavigationBar: BottomNavigationBar(
             onTap: (index) {

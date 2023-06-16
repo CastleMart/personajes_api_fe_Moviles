@@ -50,7 +50,8 @@ class PersonajeController {
           jsonData["Fuerza"],
           jsonData["Defenza"],
           jsonData["Img"],
-          jsonData["Favorito"]);
+          jsonData["Favorito"],
+          imgPixel: jsonData["ImgPixel"]);
       print(jsonData["Nombre"]);
       return personaje;
     } else {
@@ -66,7 +67,8 @@ class PersonajeController {
       "Defenza": personaje.defenza,
       "Nombre": personaje.nombre,
       "Fuerza": personaje.fuerza,
-      "Img": personaje.img
+      "Img": personaje.img,
+      "ImgPixel": personaje.imgPixel
     };
     var response = await http.post(url, body: jsonEncode(body));
     print('Id: ${personaje.id}');
@@ -91,7 +93,8 @@ class PersonajeController {
       "Defenza": personaje.defenza,
       "Nombre": personaje.nombre,
       "Fuerza": personaje.fuerza,
-      "Img": personaje.img
+      "Img": personaje.img,
+      "ImgPixel": personaje.imgPixel
     };
     var response = await http.put(url, body: jsonEncode(body));
     print('Id: ${personaje.id}');

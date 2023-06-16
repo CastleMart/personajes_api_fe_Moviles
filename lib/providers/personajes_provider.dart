@@ -8,7 +8,7 @@ import '../models/personaje.dart';
 class PersonajesProvider with ChangeNotifier {
   PersonajeController connect = new PersonajeController();
   late Future<List<Personaje>> _personajes = connect.getPersonajes();
-  bool _esAdmin = false;
+  bool _esAdmin = true;
 
   Future<List<Personaje>> get personajes => _personajes;
   bool get esAdmin => _esAdmin;
