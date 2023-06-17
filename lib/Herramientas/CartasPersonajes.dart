@@ -13,11 +13,11 @@ import '../views/VerPersonaje.dart';
 import 'Botones.dart';
 import 'disenios.dart';
 
-class EnlistarPersonajes {
+class CartasPersonajes {
   static int idMayor = 0;
   static List<Personaje> personajesList = [];
 
-  EnlistarPersonajes(Future<List<Personaje>> personajes);
+  CartasPersonajes(Future<List<Personaje>> personajes);
 
   /// Widget que regresa las tarjetas de los personajes acomodados.
   ///
@@ -130,7 +130,7 @@ class EnlistarPersonajes {
 
     for (var item in datos) {
       id.add(int.parse(item.id));
-      personajesWid.add(seleccionarTipoCard(item, context));
+      personajesWid.add(cardPersonaje(item, context));
     }
 
     idMayor = id.reduce((value, element) => value > element ? value : element);
@@ -138,117 +138,81 @@ class EnlistarPersonajes {
     return personajesWid;
   }
 
+  /// Crea una tarjeta para mostar el personaje.
   ///
+  /// Esta función toma un [Personaje] y un [BuildContext] y devuelve un [Card].
   ///
+  /// La tarjeta de personaje contiene el nombre del personaje, una imagen.
+  static Widget cardPersonaje(Personaje personaje, BuildContext context) {
+    return Card(
+        elevation: 8,
+        color: Colors.white70,
+        shadowColor: Colors.purple,
+        //shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        key: UniqueKey(),
+        child: Container(
+            //padding: EdgeInsets.all(5),
+            child: Column(children: [
+          Padding(
+              padding: EdgeInsets.all(8),
+              child: Text.rich(TextSpan(
+                  text: personaje.nombre,
+                  style: TextStyle(fontWeight: FontWeight.bold)))),
+          Expanded(
+            child: Image.network(
+              personaje.img,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                // Error handling code goes here
+
+                return Text('Imagen no encontrada');
+              },
+            ),
+          ),
+          _seleccionarTipoCardOpcion(personaje, context)
+        ])));
+  }
+
+  ///Verifica qué tipo de usuario es el que ingresó a la aplicación y muestra
+  ///opciones según sea el caso.
   ///
-  static seleccionarTipoCard(Personaje personaje, BuildContext context) {
+  ///Esta función que recibe un [Personaje] y un [BuildContext].
+  ///
+  ///Esta función retorna un [Card].
+  static _seleccionarTipoCardOpcion(Personaje personaje, BuildContext context) {
     if (context.watch<PersonajesProvider>().esAdmin) {
-      return cardAdmin(personaje, context);
+      return Center(
+        child: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VerPersonaje(personaje)));
+            },
+            child: Text("Ver Detalles")),
+      );
     } else {
-      return cardUser(personaje, context);
+      return Column(children: [
+        IconButton(
+            onPressed: () {
+              PersonajeController.actualizarPersonajeFavorito(
+                  personaje.id, !personaje.favorito);
+              context.read<PersonajesProvider>().obtenerPersonaje();
+            },
+            icon: Icon(
+              Icons.star,
+              color: Colors.purple,
+            )),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VerPersonajeUser(personaje)));
+            },
+            child: Text("Ver Detalles"))
+      ]);
     }
-  }
-
-  /// Crea una tarjeta de personaje para el administrador.
-  ///
-  /// Esta función toma un [Personaje] y un [BuildContext] y devuelve un [Card].
-  ///
-  /// La tarjeta de personaje contiene el nombre del personaje, una imagen y un botón para ver detalles.
-  static Widget cardAdmin(Personaje personaje, BuildContext context) {
-    return Card(
-        elevation: 8,
-        color: Color.fromARGB(255, 231, 228, 234),
-        //shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        key: UniqueKey(),
-        child: Container(
-            //padding: EdgeInsets.all(5),
-            child: Column(
-          children: [
-            Padding(
-                padding: EdgeInsets.all(8),
-                child: Text.rich(TextSpan(
-                    text: personaje.nombre,
-                    style: TextStyle(fontWeight: FontWeight.bold)))),
-            Expanded(
-              child: Image.network(
-                personaje.img,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  // Error handling code goes here
-
-                  return Text('Imagen no encontrada');
-                },
-              ),
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerPersonaje(personaje)));
-                },
-                child: Text("Ver Detalles")),
-          ],
-        )));
-  }
-
-  /// Crea una tarjeta de personaje para el usuario.
-  ///
-  /// Esta función toma un [Personaje] y un [BuildContext] y devuelve un [Card].
-  ///
-  /// La tarjeta de personaje contiene el nombre del personaje, una imagen y un botón para ver detalles.
-  static Widget cardUser(Personaje personaje, BuildContext context) {
-    return Card(
-        elevation: 8,
-        color: Color.fromARGB(255, 231, 228, 234),
-        //shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-        key: UniqueKey(),
-        child: Container(
-            //padding: EdgeInsets.all(5),
-            child: Column(
-          children: [
-            Padding(
-                padding: EdgeInsets.all(8),
-                child: Text.rich(TextSpan(
-                    text: personaje.nombre,
-                    style: TextStyle(fontWeight: FontWeight.bold)))),
-
-            Expanded(
-              child: Image.network(
-                personaje.img,
-                errorBuilder: (BuildContext context, Object exception,
-                    StackTrace? stackTrace) {
-                  // Error handling code goes here
-
-                  return Text('Imagen no encontrada');
-                },
-              ),
-            ),
-
-            //Favorito.favorito(item.id, item.favorito, context),
-            IconButton(
-                onPressed: () {
-                  PersonajeController.actualizarPersonajeFavorito(
-                      personaje.id, !personaje.favorito);
-                  context.read<PersonajesProvider>().obtenerPersonaje();
-                },
-                icon: Icon(
-                  Icons.star,
-                  color: Colors.purple,
-                )),
-
-            //Disenios.atributosPersonaje("Fuerza", item.fuerza, 2.0),
-            //Disenios.atributosPersonaje("Defensa", item.defenza, 2.0)
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => VerPersonajeUser(personaje)));
-                },
-                child: Text("Ver Detalles")),
-          ],
-        )));
   }
 
   static int obtenerIdMayor() {

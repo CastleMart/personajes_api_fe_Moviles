@@ -50,6 +50,7 @@ class _LoginState extends State<Login> {
                       SizedBox(
                         width: double.maxFinite,
                         child: ElevatedButton(
+                            //TODO: Agregar función con la API
                             onPressed: () {
                               if (userText.text == "a") {
                                 context
@@ -64,7 +65,7 @@ class _LoginState extends State<Login> {
                                             PantallaPrincipal()));
                               }
                             },
-                            child: Text(
+                            child: const Text(
                               "Entrar",
                               style: TextStyle(fontSize: 30.0),
                             )),

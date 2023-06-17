@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
+import 'package:personajes_api_fe/Herramientas/CartasPersonajes.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/VerPersonaje.dart';
 import 'package:personajes_api_fe/views/VerPersonajeUser.dart';

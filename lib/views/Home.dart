@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../Herramientas/Botones.dart';
 import '../Herramientas/Buscador.dart';
-import '../Herramientas/EnlistarPersonajes.dart';
+import '../Herramientas/CartasPersonajes.dart';
 import '../controllers/PersonajeController.dart';
 import '../models/personaje.dart';
 import '../providers/personajes_provider.dart';
@@ -70,7 +70,7 @@ class _HomeState extends State<Home> {
             child: Column(
               children: [
                 Expanded(
-                  child: EnlistarPersonajes.regresarFuturePersonajes(context),
+                  child: CartasPersonajes.regresarFuturePersonajes(context),
                 ),
               ],
             ),

@@ -33,6 +33,8 @@ class ActualizarPersonaje extends StatelessWidget {
     PersonajeController con = PersonajeController();
 
     return Scaffold(
+
+        //TODO: Corregir bug del teclado
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           title: const Text('Actualizar personaje'),

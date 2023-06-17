@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Botones.dart';
-import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
+import 'package:personajes_api_fe/Herramientas/CartasPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/views/ActualizarPersonaje.dart';

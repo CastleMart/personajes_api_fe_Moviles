@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:personajes_api_fe/Herramientas/Buscador.dart';
-import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
+import 'package:personajes_api_fe/Herramientas/CartasPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 
 import 'package:personajes_api_fe/models/personaje.dart';
@@ -36,8 +36,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
-
     super.initState();
   }
 
@@ -46,10 +44,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mi aplicación',
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-      ),
-      home: Scaffold(resizeToAvoidBottomInset: false, body: Login()),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      home: Scaffold(body: Login()),
     );
   }
 }

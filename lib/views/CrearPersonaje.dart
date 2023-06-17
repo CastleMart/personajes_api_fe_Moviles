@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:personajes_api_fe/Herramientas/EnlistarPersonajes.dart';
+import 'package:personajes_api_fe/Herramientas/CartasPersonajes.dart';
 import 'package:personajes_api_fe/Herramientas/TextFieldBase.dart';
 import 'package:personajes_api_fe/common/enums.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
@@ -52,7 +52,7 @@ class CrearPersonaje extends StatelessWidget {
                         if (keyForm.currentState!.validate()) {
                           await con.crearPersonaje(
                               new Personaje(
-                                  (EnlistarPersonajes.idMayor + 1).toString(),
+                                  (CartasPersonajes.idMayor + 1).toString(),
                                   nombreText.text,
                                   fuerzaText.text,
                                   defenzaText.text,
