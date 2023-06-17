@@ -30,7 +30,11 @@ class _VerPersonajeState extends State<VerPersonaje> {
     personajeId = widget.personaje.id;
 
     setState(() {
-      per = PersonajeController.getPersonajeId(personajeId);
+      try {
+        per = PersonajeController.getPersonajeId(personajeId);
+      } catch (e) {
+        Navigator.pop(context);
+      }
       _isLoading = false;
     });
   }
@@ -99,7 +103,7 @@ class _VerPersonajeState extends State<VerPersonaje> {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ActualizarPersonaje(personaje)));
+                                  new ActualizarPersonaje(personaje)));
                       setState(() {
                         _isLoading = true;
 

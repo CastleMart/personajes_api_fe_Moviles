@@ -77,10 +77,6 @@ class PersonajeController {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       //Disenios.verBarraAccion("Se ha ingresado el personaje", context);
     }
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => MyApp()),
-    );
 
     //Navigator.pop(context);
   }

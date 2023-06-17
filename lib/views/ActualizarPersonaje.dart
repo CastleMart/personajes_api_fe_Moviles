@@ -19,7 +19,6 @@ class ActualizarPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     TextEditingController nombreText =
         TextEditingController(text: this.personaje.nombre);
     TextEditingController fuerzaText =
@@ -30,6 +29,7 @@ class ActualizarPersonaje extends StatelessWidget {
         TextEditingController(text: this.personaje.imgPixel);
     TextEditingController imgText =
         TextEditingController(text: this.personaje.img);
+    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     PersonajeController con = PersonajeController();
 
     return Scaffold(

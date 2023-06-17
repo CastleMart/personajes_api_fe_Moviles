@@ -5,6 +5,7 @@ import 'package:personajes_api_fe/common/enums.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 
 import 'package:personajes_api_fe/models/personaje.dart';
+import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
 
 //void main() => runApp(const MyApp());
 
@@ -30,7 +31,7 @@ class CrearPersonaje extends StatelessWidget {
           title: const Text('Introducir nuevo personaje'),
         ),
         body: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(5.0),
             child: Form(
               key: keyForm,
               child: ListView(
@@ -47,9 +48,9 @@ class CrearPersonaje extends StatelessWidget {
                   TextFieldBase("Imagen", imgText),
                   TextFieldBase("Pixel Art", imgPixelText),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (keyForm.currentState!.validate()) {
-                          con.crearPersonaje(
+                          await con.crearPersonaje(
                               new Personaje(
                                   (EnlistarPersonajes.idMayor + 1).toString(),
                                   nombreText.text,
@@ -60,7 +61,11 @@ class CrearPersonaje extends StatelessWidget {
                                   imgPixel: imgPixelText.text),
                               context);
                         }
-
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PantallaPrincipal()),
+                        );
                         //Navigator.pop(context);
                       },
                       child: Text("Agregar"))
@@ -69,5 +74,5 @@ class CrearPersonaje extends StatelessWidget {
             )));
   }
 
-  guardar() {}
+  //guardar() {}
 }

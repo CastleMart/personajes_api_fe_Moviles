@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
       ),
       home: SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          //resizeToAvoidBottomInset: false,
           appBar: AppBar(
             title: Text("Personajes Fire Emblem"),
             actions: [

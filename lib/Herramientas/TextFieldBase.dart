@@ -15,19 +15,28 @@ class TextFieldBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(texto),
-        TextFormField(
-          controller: controller,
-          maxLength: ValidateMaxLength(),
-          inputFormatters: [ValidateInputFormater()],
-          validator: (String? value) {
-            return ValidateStructure(value);
-          },
-        )
-      ],
-    );
+    return Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            //Text(texto),
+            TextFormField(
+              enableInteractiveSelection: false,
+              controller: controller,
+              maxLength: ValidateMaxLength(),
+              inputFormatters: [ValidateInputFormater()],
+              decoration: InputDecoration(
+                  hintText: texto,
+                  labelText: texto,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0))),
+              autofocus: false,
+              validator: (String? value) {
+                return ValidateStructure(value);
+              },
+            )
+          ],
+        ));
   }
 
   ValidateMaxLength() {
