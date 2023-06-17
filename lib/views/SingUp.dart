@@ -1,22 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
-import 'package:personajes_api_fe/views/SingUp.dart';
-import 'package:provider/provider.dart';
+import 'package:personajes_api_fe/views/login.dart';
 
 import '../Herramientas/TextFieldBase.dart';
 import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
-import '../providers/personajes_provider.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SingUp extends StatelessWidget {
+  const SingUp({super.key});
 
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     TextEditingController userText = TextEditingController(text: "");
@@ -37,7 +29,7 @@ class _LoginState extends State<Login> {
                         backgroundColor: Colors.grey,
                       ),
                       Text(
-                        'Ingresar',
+                        'Regístrate',
                         style: TextStyle(fontFamily: 'Arial', fontSize: 50.0),
                       ),
                       TextFieldBase(
@@ -47,25 +39,19 @@ class _LoginState extends State<Login> {
                       ),
                       TextFieldBase("Contraseña", passwordText,
                           validateText: ValidateText.password),
+                      TextFieldBase("Repetir Contraseña", passwordText,
+                          validateText: ValidateText.password),
                       SizedBox(
                         width: double.maxFinite,
                         child: ElevatedButton(
                             onPressed: () {
-                              if (userText.text == "a") {
-                                context
-                                    .read<PersonajesProvider>()
-                                    .cambiarTipoUsuario();
-                              }
-                              if (keyForm.currentState!.validate()) {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            PantallaPrincipal()));
-                              }
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Login()));
                             },
                             child: Text(
-                              "Entrar",
+                              "Registrar",
                               style: TextStyle(fontSize: 30.0),
                             )),
                       ),
@@ -74,9 +60,9 @@ class _LoginState extends State<Login> {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => SingUp()))
+                                        builder: (context) => Login()))
                               },
-                          child: Text("Regístrate"))
+                          child: Text("Ingresar"))
                     ],
                   )
                 ]))));

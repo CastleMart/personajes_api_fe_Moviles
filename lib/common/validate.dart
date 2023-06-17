@@ -11,6 +11,11 @@ ValidateNum(String value) {
 }
 
 ValidateNoEmpty(String value) {
-  String exp = r'^.+$';
+  String exp = r'^[a-zA-Z0-9_@.-]+$';
+  return RegExp(exp).hasMatch(value);
+}
+
+ValidatePassword(String value) {
+  String exp = r'^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$';
   return RegExp(exp).hasMatch(value);
 }

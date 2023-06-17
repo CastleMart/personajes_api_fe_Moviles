@@ -9,9 +9,10 @@ class TextFieldBase extends StatelessWidget {
   TextEditingController controller;
   ValidateText? validateText;
   bool notRequire;
+  bool obscureText;
 
   TextFieldBase(this.texto, this.controller,
-      {this.validateText, this.notRequire = false});
+      {this.validateText, this.notRequire = false, this.obscureText = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class TextFieldBase extends StatelessWidget {
               enableInteractiveSelection: false,
               controller: controller,
               maxLength: ValidateMaxLength(),
+              obscureText: validateObscureText(),
               inputFormatters: [ValidateInputFormater()],
               decoration: InputDecoration(
                   hintText: texto,
@@ -47,6 +49,11 @@ class TextFieldBase extends StatelessWidget {
         return 10;
       case ValidateText.longText:
         return 100;
+      case ValidateText.password:
+        return 32;
+
+      case ValidateText.user:
+        return 25;
 
       default:
         return null;
@@ -64,10 +71,20 @@ class TextFieldBase extends StatelessWidget {
               : "La estrucura del nombre es incorrecta";
         case ValidateText.numValue:
           return ValidateNum(value!) ? null : "Debe hacer al menos un número";
+
         case ValidateText.longText:
           return ValidateNoEmpty(value!)
               ? null
               : "Debe tener al menos un valor";
+        case ValidateText.password:
+          return ValidatePassword(value!)
+              ? null
+              : "Debe tener 8 carácteres, una mayúscula y un número";
+
+        case ValidateText.user:
+          return ValidateNoEmpty(value!)
+              ? null
+              : "No puede estar vacío el nombre de usuario.";
 
         default:
           return null;
@@ -86,6 +103,16 @@ class TextFieldBase extends StatelessWidget {
 
       default:
         return FilteringTextInputFormatter.singleLineFormatter;
+    }
+  }
+
+  validateObscureText() {
+    switch (validateText) {
+      case ValidateText.password:
+        return true;
+
+      default:
+        return false;
     }
   }
 }
