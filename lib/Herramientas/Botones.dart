@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
 
 import 'package:personajes_api_fe/main.dart';
+import 'package:personajes_api_fe/views/Home.dart';
+import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
 import '../views/CrearPersonaje.dart';
 import 'disenios.dart';
 
@@ -25,7 +27,9 @@ class Botones {
           await Disenios.alertaBorrar(context, id);
 
           //MaterialPageRoute(builder: (context) => new MyApp());
-          Navigator.pop(context);
+          //Navigator.pop(context);
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
         },
         child: Text("Borrar"));
   }
