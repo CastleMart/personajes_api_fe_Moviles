@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/views/Opciones.dart';
+import 'package:personajes_api_fe/views/navBar.dart';
 import 'package:provider/provider.dart';
 
 import '../controllers/PersonajeController.dart';
@@ -19,23 +21,25 @@ class PantallaPrincipal extends StatefulWidget {
 
 class _PantallaPrincipalState extends State<PantallaPrincipal> {
   // This widget is the root of your application.
-  PersonajeController connect = new PersonajeController();
+  PersonajeController connect = PersonajeController();
   late Future<List<Personaje>> personajes;
   late List<Personaje> personajesFiltrados;
   late List<Personaje> personajesLista;
   int _paginaActual = 0;
   int idMayor = 0;
 
-  List<Widget> _paginasAdmin = [Home(), CrearPersonaje()];
-  List<Widget> _paginasUsuario = [Home(), FavoritosPage()];
+  List<Widget> _paginasAdmin = [Home(), CrearPersonaje(), Opciones()];
+  List<Widget> _paginasUsuario = [Home(), FavoritosPage(), Opciones()];
   List<BottomNavigationBarItem> _navAdmin = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.create), label: "Ingresar Personaje")
+        icon: Icon(Icons.create), label: "Ingresar Personaje"),
+    BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Opciones")
   ];
   List<BottomNavigationBarItem> _navUsuario = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favoritos"),
+    BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Opciones")
   ];
 
   late List<BottomNavigationBarItem> _tipoNav;
