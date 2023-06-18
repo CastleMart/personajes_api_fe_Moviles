@@ -218,4 +218,95 @@ class CartasPersonajes {
   static int obtenerIdMayor() {
     return idMayor;
   }
+
+//--------------------------------------------------
+
+  ///Verifica qué tipo de usuario es el que ingresó a la aplicación y muestra
+  ///opciones según sea el caso.
+  ///
+  ///Esta función que recibe un [Personaje] y un [BuildContext].
+  ///
+  ///Esta función retorna un [Card].
+  static _seleccionarCardUsuario(Personaje personaje, BuildContext context) {
+    if (context.watch<PersonajesProvider>().esAdmin) {
+      return IconButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ActualizarPersonaje(personaje)));
+          },
+          icon: Icon(
+            Icons.edit,
+            color: Colors.purple,
+          ));
+    } else {
+      return IconButton(
+          onPressed: () {
+            PersonajeController.actualizarPersonajeFavorito(
+                personaje.id, !personaje.favorito);
+            context.read<PersonajesProvider>().obtenerPersonaje();
+          },
+          icon: Icon(
+            Icons.star,
+            color: Colors.purple,
+          ));
+    }
+  }
+
+  static Widget cardListView(List<Personaje> personajes, bool tipoUsuario) {
+    List<int> id = [];
+    return ListView.builder(
+      itemCount: personajes.length + 1,
+      itemBuilder: (BuildContext context, int index) {
+        if (index < personajes.length) {
+          final personaje = personajes[index];
+
+          for (var item in personajes) {
+            id.add(int.parse(item.id));
+          }
+
+          idMayor =
+              id.reduce((value, element) => value > element ? value : element);
+          print(idMayor);
+          return Card(
+              //shape: ,
+              child: Container(
+            alignment: AlignmentDirectional.center,
+            height: 100,
+            child: ListTile(
+              leading: CircleAvatar(
+                  backgroundImage: NetworkImage(personajes[index].imgPixel)),
+              trailing: _seleccionarCardUsuario(personajes[index], context),
+              title: Text(personajes[index].nombre),
+              onTap: () {
+                if (tipoUsuario) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerPersonaje(personaje),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerPersonajeUser(personaje),
+                    ),
+                  );
+                }
+              },
+            ),
+          ));
+        } else {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32),
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
 }

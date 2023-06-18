@@ -19,6 +19,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PersonajeController connect = PersonajeController();
   late Future<List<Personaje>> personajes;
+  late List<Personaje> personajesList = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -29,12 +31,15 @@ class _HomeState extends State<Home> {
   Future<void> obtenerPersonajes() async {
     try {
       personajes = connect.getPersonajes();
+      personajesList = await personajes;
     } catch (e) {
       print(e);
     }
 
     setState(() {
       personajes = personajes;
+      personajesList = personajesList;
+      //_isLoading = false;
     });
   }
 
@@ -67,19 +72,18 @@ class _HomeState extends State<Home> {
             color: Colors.white,
             displacement: 20.0,
             strokeWidth: 4,
-            child: Column(
-              children: [
-                Expanded(
-                  child: CartasPersonajes.regresarFuturePersonajes(context),
-                ),
-              ],
-            ),
+            child: CartasPersonajes.cardListView(
+                personajesList, context.read<PersonajesProvider>().esAdmin),
             onRefresh: () async {
               context.read<PersonajesProvider>().obtenerPersonaje();
+              obtenerPersonajes();
             },
           ),
         ),
       ),
-    );
+    )
+        //child: Center(
+        //    child: CircularProgressIndicator(backgroundColor: Colors.white))
+        ;
   }
 }
