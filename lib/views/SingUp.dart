@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/disenios.dart';
+import 'package:personajes_api_fe/models/Usuario.dart';
 import 'package:personajes_api_fe/views/login.dart';
 
 import '../Herramientas/TextFieldBase.dart';
 import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
+import '../controllers/UsuariosController.dart';
 
 class SingUp extends StatelessWidget {
   const SingUp({super.key});
@@ -12,9 +15,11 @@ class SingUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController userText = TextEditingController(text: "");
+    TextEditingController nombreText = TextEditingController(text: "");
     TextEditingController passwordText = TextEditingController(text: "");
+    TextEditingController passwordRepiteText = TextEditingController(text: "");
     GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-    PersonajeController con = PersonajeController();
+    UsuariosController conUsuario = UsuariosController();
     return Scaffold(
         body: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -37,19 +42,52 @@ class SingUp extends StatelessWidget {
                         userText,
                         validateText: ValidateText.user,
                       ),
+                      TextFieldBase(
+                        "Nombre Completo",
+                        nombreText,
+                        validateText: ValidateText.name,
+                      ),
                       TextFieldBase("Contraseña", passwordText,
                           validateText: ValidateText.password),
-                      TextFieldBase("Repetir Contraseña", passwordText,
+                      TextFieldBase("Repetir Contraseña", passwordRepiteText,
                           validateText: ValidateText.password),
                       SizedBox(
                         width: double.maxFinite,
                         child: ElevatedButton(
                             //TODO: Agregar funcionalidad de registar en la API un usuario.
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Login()));
+                            onPressed: () async {
+                              if (keyForm.currentState!.validate()) {
+                                if (passwordText.text !=
+                                    passwordRepiteText.text) {
+                                  Disenios.verBarraAccion(
+                                      "No coinciden las dos contraseñas",
+                                      context);
+                                  passwordRepiteText.text = "";
+                                  passwordText.text = "";
+                                }
+
+                                if (await UsuariosController.existeUsuario(
+                                    userText.text)) {
+                                  Disenios.verBarraAccion(
+                                      "Ya existe el usuario, pruebe con otro.",
+                                      context);
+                                  passwordRepiteText.text = "";
+                                  passwordText.text = "";
+                                } else {
+                                  Usuario usuario = Usuario(
+                                      userText.text, nombreText.text,
+                                      password: passwordText.text);
+                                  conUsuario.crearUsuario(usuario, context);
+
+                                  Disenios.verBarraAccion(
+                                      "Usuario Creado Exitosamente", context);
+
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()));
+                                }
+                              }
                             },
                             child: Text(
                               "Registrar",

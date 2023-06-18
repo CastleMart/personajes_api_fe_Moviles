@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/Herramientas/disenios.dart';
+import 'package:personajes_api_fe/controllers/UsuariosController.dart';
 import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
 import 'package:personajes_api_fe/views/SingUp.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +25,9 @@ class _LoginState extends State<Login> {
     TextEditingController passwordText = TextEditingController(text: "");
     GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     PersonajeController con = PersonajeController();
+    UsuariosController userCon = UsuariosController();
+    bool verificar = false;
+
     return Scaffold(
         body: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -51,19 +56,24 @@ class _LoginState extends State<Login> {
                         width: double.maxFinite,
                         child: ElevatedButton(
                             //TODO: Agregar función con la API
-                            onPressed: () {
-                              if (userText.text == "a") {
+                            onPressed: () async {
+                              if (await UsuariosController.verificarPassword(
+                                  userText.text, passwordText.text)) {
                                 context
                                     .read<PersonajesProvider>()
                                     .cambiarTipoUsuario();
-                              }
-                              if (keyForm.currentState!.validate()) {
+
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             PantallaPrincipal()));
+                              } else {
+                                Disenios.verBarraAccion(
+                                    "Contrasña o usuario incorrecto", context);
                               }
+                              // ! Checar bien código
+                              //if (keyForm.currentState!.validate()) {}
                             },
                             child: const Text(
                               "Entrar",

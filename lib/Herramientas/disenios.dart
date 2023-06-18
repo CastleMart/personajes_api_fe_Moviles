@@ -42,7 +42,7 @@ class Disenios {
 
   ///Barra que realiza una acción según el mensaje que recibe
   ///recibe [mensaje] y [context]
-  /*static void verBarraAccion(String mensaje, context) {
+  static void verBarraAccion(String mensaje, context) {
     final barraBaja = SnackBar(
         content: Text(
       mensaje,
@@ -50,7 +50,7 @@ class Disenios {
     ));
     ScaffoldMessenger.of(context).showSnackBar(barraBaja);
   }
-*/
+
   static alertaBorrar(context, id) {
     return showDialog(
         context: context,
