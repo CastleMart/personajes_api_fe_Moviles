@@ -61,6 +61,8 @@ class _LoginState extends State<Login> {
                                 context
                                     .read<PersonajesProvider>()
                                     .setTipoUsuario(userCon.getEsAdmin());
+                                context.read<PersonajesProvider>().setUsuarios(
+                                    await userCon.getUsuario(userText.text));
 
                                 Navigator.pushReplacement(
                                     context,
@@ -69,7 +71,7 @@ class _LoginState extends State<Login> {
                                             PantallaPrincipal()));
                               } else {
                                 Disenios.verBarraAccion(
-                                    "Contrasña o usuario incorrecto", context);
+                                    "Contraseña o usuario incorrecto", context);
                               }
                               // ! Checar bien código
                               //if (keyForm.currentState!.validate()) {}

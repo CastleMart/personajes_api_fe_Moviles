@@ -31,7 +31,7 @@ class CartasPersonajes {
         if (snapshot.hasData) {
           return GridView.count(
             crossAxisCount: 1,
-            children: _listaPersonajes(snapshot.requireData, context),
+            children: listaPersonajes(snapshot.requireData, context),
           );
         } else if (snapshot.hasError) {
           return Text("Error");
@@ -123,7 +123,7 @@ class CartasPersonajes {
   /// Esta función toma una lista de [Personaje] y un [BuildContext] y devuelve una lista de [Widget].
   ///
   /// La lista de widgets se crea a partir de la lista de personajes proporcionada. También se guarda el id más grande en la variable global [idMayor].
-  static List<Widget> _listaPersonajes(
+  static List<Widget> listaPersonajes(
       List<Personaje> datos, BuildContext context) {
     List<Widget> personajesWid = [];
     List<int> id = [];
