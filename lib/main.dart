@@ -5,6 +5,7 @@ import 'package:http/http.dart';
 import 'package:personajes_api_fe/Herramientas/Buscador.dart';
 import 'package:personajes_api_fe/Herramientas/CartasPersonajes.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
+import 'package:personajes_api_fe/controllers/UsuariosController.dart';
 
 import 'package:personajes_api_fe/models/personaje.dart';
 import 'package:personajes_api_fe/providers/personajes_provider.dart';
@@ -36,7 +37,9 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
+    UsuariosController con = UsuariosController();
     super.initState();
+    print(con.getUsuario("mario"));
   }
 
   @override

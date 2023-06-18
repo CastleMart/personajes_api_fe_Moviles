@@ -84,7 +84,7 @@ class TextFieldBase extends StatelessWidget {
         case ValidateText.user:
           return ValidateNoEmpty(value!)
               ? null
-              : "No puede estar vacío el nombre de usuario.";
+              : "Se acepta letras, números, arrobas y guiones solamente";
 
         default:
           return null;
