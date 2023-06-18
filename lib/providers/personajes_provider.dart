@@ -18,6 +18,11 @@ class PersonajesProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setTipoUsuario(bool tipoUsuario) {
+    _esAdmin = tipoUsuario;
+    notifyListeners();
+  }
+
   void obtenerPersonaje() {
     _personajes = connect.getPersonajes();
     notifyListeners();

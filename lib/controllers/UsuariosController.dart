@@ -8,6 +8,8 @@ class UsuariosController {
   static String _urlEndpoint =
       "https://bh4aaegaea.execute-api.us-east-1.amazonaws.com/test/";
 
+  static bool _esAdmin = false;
+
   ///Método que regresa un usuario disponibles en la API.
   ///
   ///Devuelve como resultado [Usuario]
@@ -21,7 +23,7 @@ class UsuariosController {
       usuario = Usuario(jsonData["NombreUsuario"], jsonData["Nombre"],
           esAdmin: jsonData["Administrador"]);
     } else {
-      throw Exception("Falló la conexión.");
+      return throw Exception("Falló la conexión.");
     }
 
     return usuario;
@@ -39,13 +41,13 @@ class UsuariosController {
     return response;
   }
 
-  static Future<bool> verificarPassword(
-      String nombreUsuario, String password) async {
+  Future<bool> verificarPassword(String nombreUsuario, String password) async {
     var url = Uri.parse(_urlEndpoint + nombreUsuario);
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
+      _esAdmin = jsonData["Administrador"];
       return jsonData["Password"] == password;
     }
 
@@ -61,5 +63,9 @@ class UsuariosController {
       return jsonData["NombreUsuario"] == nombreUsuario;
     }
     return false;
+  }
+
+  bool getEsAdmin() {
+    return _esAdmin;
   }
 }

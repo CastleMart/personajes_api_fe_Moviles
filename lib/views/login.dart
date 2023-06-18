@@ -55,13 +55,12 @@ class _LoginState extends State<Login> {
                       SizedBox(
                         width: double.maxFinite,
                         child: ElevatedButton(
-                            //TODO: Agregar función con la API
                             onPressed: () async {
-                              if (await UsuariosController.verificarPassword(
+                              if (await userCon.verificarPassword(
                                   userText.text, passwordText.text)) {
                                 context
                                     .read<PersonajesProvider>()
-                                    .cambiarTipoUsuario();
+                                    .setTipoUsuario(userCon.getEsAdmin());
 
                                 Navigator.pushReplacement(
                                     context,
