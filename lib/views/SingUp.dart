@@ -54,6 +54,7 @@ class SingUp extends StatelessWidget {
                       SizedBox(
                         width: double.maxFinite,
                         child: ElevatedButton(
+                            //TODO: Agregar funcionalidad de registar en la API un usuario.
                             onPressed: () async {
                               if (keyForm.currentState!.validate()) {
                                 if (passwordText.text !=

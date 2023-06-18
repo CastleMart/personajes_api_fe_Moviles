@@ -133,7 +133,7 @@ class CartasPersonajes {
       personajesWid.add(cardPersonaje(item, context));
     }
 
-    //idMayor = id.reduce((value, element) => value > element ? value : element);
+    idMayor = id.reduce((value, element) => value > element ? value : element);
     print(idMayor);
     return personajesWid;
   }
