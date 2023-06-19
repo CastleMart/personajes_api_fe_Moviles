@@ -328,4 +328,44 @@ class CartasPersonajes {
       },
     );
   }
+
+  static Widget cardListViewFavoritos(List<Personaje> personajes) {
+    List<int> id = [];
+    return ListView.builder(
+      itemCount: personajes.length,
+      itemBuilder: (BuildContext context, int index) {
+        if (index < personajes.length) {
+          final personaje = personajes[index];
+
+          for (var item in personajes) {
+            id.add(int.parse(item.id));
+          }
+
+          idMayor =
+              id.reduce((value, element) => value > element ? value : element);
+          print(idMayor);
+          return Card(
+              //shape: ,
+              child: Container(
+            alignment: AlignmentDirectional.center,
+            height: 100,
+            child: ListTile(
+                leading: CircleAvatar(
+                    backgroundImage: NetworkImage(personajes[index].imgPixel)),
+                trailing: _seleccionarCardUsuario(personajes[index],
+                    context.read<PersonajesProvider>().usuario, context),
+                title: Text(personajes[index].nombre),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerPersonajeUser(personaje),
+                    ),
+                  );
+                }),
+          ));
+        }
+      },
+    );
+  }
 }

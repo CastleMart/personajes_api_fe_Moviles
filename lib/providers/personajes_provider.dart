@@ -9,6 +9,7 @@ import '../models/personaje.dart';
 class PersonajesProvider with ChangeNotifier {
   PersonajeController connect = new PersonajeController();
   late Future<List<Personaje>> _personajes = connect.getPersonajes();
+
   Usuario _usuario = Usuario("", "");
   bool _esAdmin = false;
 
@@ -18,6 +19,7 @@ class PersonajesProvider with ChangeNotifier {
 
   void setUsuarios(Usuario usuario) {
     _usuario = usuario;
+    notifyListeners();
   }
 
   void cambiarTipoUsuario() {
@@ -35,7 +37,7 @@ class PersonajesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> ObtenerPersonajes() async {
+  Future<void> obtenerPersonajesList() async {
     try {
       _personajes = connect.getPersonajes();
     } catch (e) {
