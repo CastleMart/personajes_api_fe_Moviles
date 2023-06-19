@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:personajes_api_fe/common/enums.dart';
 import 'package:personajes_api_fe/common/validate.dart';
 
+///Clase que verifica los campos de los formularios y aplica
+///estilos.
 class TextFieldBase extends StatelessWidget {
   String texto;
   TextEditingController controller;
@@ -16,13 +18,14 @@ class TextFieldBase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //FocusScope.of(context).requestFocus(FocusNode());
     return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             //Text(texto),
             TextFormField(
-              enableInteractiveSelection: false,
+              //enableInteractiveSelection: false,
               controller: controller,
               maxLength: ValidateMaxLength(),
               obscureText: validateObscureText(),
@@ -32,6 +35,9 @@ class TextFieldBase extends StatelessWidget {
                   labelText: texto,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))),
+              //! si lo dejo en True, se activa el teclado solo, pero cuando trato de cerrarlo,
+              //! me reinicia los valores iniciales y se vuelve a abrir. Si lo dejo false, al presionar un campo,
+              //! se abre y cierra automáticamente el teclado.
               autofocus: false,
               validator: (String? value) {
                 return ValidateStructure(value);

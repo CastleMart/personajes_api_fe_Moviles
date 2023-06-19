@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Favoritos.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
+import 'package:personajes_api_fe/models/Usuario.dart';
 import 'package:personajes_api_fe/views/VerPersonajeUser.dart';
 import 'package:provider/provider.dart';
 
@@ -16,7 +17,7 @@ import 'disenios.dart';
 class CartasPersonajes {
   static int idMayor = 0;
   static List<Personaje> personajesList = [];
-
+/*
   CartasPersonajes(Future<List<Personaje>> personajes);
 
   /// Widget que regresa las tarjetas de los personajes acomodados.
@@ -217,7 +218,7 @@ class CartasPersonajes {
 
   static int obtenerIdMayor() {
     return idMayor;
-  }
+  }*/
 
 //--------------------------------------------------
 
@@ -226,9 +227,12 @@ class CartasPersonajes {
   ///
   ///Esta función que recibe un [Personaje] y un [BuildContext].
   ///
-  ///Esta función retorna un [Card].
-  static _seleccionarCardUsuario(Personaje personaje, BuildContext context) {
+  ///Esta función retorna un [Widget].
+  static _seleccionarCardUsuario(
+      Personaje personaje, Usuario usuario, BuildContext context) {
+    //bool admin = true; //;
     if (context.watch<PersonajesProvider>().esAdmin) {
+      //! Aquí mando a llamar a mi página actualizar personaje.
       return IconButton(
           onPressed: () {
             Navigator.push(
@@ -241,16 +245,25 @@ class CartasPersonajes {
             color: Colors.purple,
           ));
     } else {
-      return IconButton(
-          onPressed: () {
-            PersonajeController.actualizarPersonajeFavorito(
-                personaje.id, !personaje.favorito);
-            context.read<PersonajesProvider>().obtenerPersonaje();
-          },
-          icon: Icon(
-            Icons.star,
-            color: Colors.purple,
-          ));
+      if (usuario.favoritos.contains(personaje.id)) {
+        return IconButton(
+            onPressed: () {
+              PersonajeController.actualizarPersonajeFavorito(
+                  personaje.id, !personaje.favorito);
+              context.read<PersonajesProvider>().obtenerPersonaje();
+            },
+            icon: Icon(
+              Icons.star,
+            ));
+      } else {
+        return IconButton(
+            onPressed: () {
+              PersonajeController.actualizarPersonajeFavorito(
+                  personaje.id, !personaje.favorito);
+              context.read<PersonajesProvider>().obtenerPersonaje();
+            },
+            icon: Icon(Icons.star_border));
+      }
     }
   }
 
@@ -279,7 +292,8 @@ class CartasPersonajes {
             child: ListTile(
               leading: CircleAvatar(
                   backgroundImage: NetworkImage(personajes[index].imgPixel)),
-              trailing: _seleccionarCardUsuario(personajes[index], context),
+              trailing: _seleccionarCardUsuario(personajes[index],
+                  context.read<PersonajesProvider>().usuario, context),
               title: Text(personajes[index].nombre),
               onTap: () {
                 if (tipoUsuario) {

@@ -99,11 +99,11 @@ class _VerPersonajeState extends State<VerPersonaje> {
               children: [
                 ElevatedButton(
                     onPressed: () async {
-                      await Navigator.push(
+                      await Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  new ActualizarPersonaje(personaje)));
+                                  ActualizarPersonaje(personaje)));
                       setState(() {
                         _isLoading = true;
 

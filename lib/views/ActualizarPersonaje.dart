@@ -19,6 +19,7 @@ class ActualizarPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Controladores para recibir los campos
     TextEditingController nombreText =
         TextEditingController(text: this.personaje.nombre);
     TextEditingController fuerzaText =
@@ -33,49 +34,50 @@ class ActualizarPersonaje extends StatelessWidget {
     PersonajeController con = PersonajeController();
 
     return Scaffold(
+      //TODO: Corregir bug del teclado
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('Actualizar personaje'),
+      ),
+      body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: keyForm,
+            child: ListView(
+              children: [
+                //Utilización de un método creado para las validaciones.
+                TextFieldBase(
+                  "Nombre",
+                  nombreText,
+                  validateText: ValidateText.name,
+                ),
+                TextFieldBase("Fuerza", fuerzaText,
+                    validateText: ValidateText.numValue),
+                TextFieldBase("Defensa", defenzaText,
+                    validateText: ValidateText.numValue),
+                TextFieldBase("Imagen", imgText),
+                TextFieldBase("Pixel Art", imgPixelText),
+                ElevatedButton(
+                    onPressed: () async {
+                      if (keyForm.currentState!.validate()) {
+                        await con.actualizarPersonaje(
+                            Personaje(
+                                this.personaje.id,
+                                nombreText.text,
+                                fuerzaText.text,
+                                defenzaText.text,
+                                imgText.text,
+                                false,
+                                imgPixel: imgPixelText.text),
+                            context);
+                      }
 
-        //TODO: Corregir bug del teclado
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text('Actualizar personaje'),
-        ),
-        body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Form(
-              key: keyForm,
-              child: ListView(
-                children: [
-                  TextFieldBase(
-                    "Nombre",
-                    nombreText,
-                    validateText: ValidateText.name,
-                  ),
-                  TextFieldBase("Fuerza", fuerzaText,
-                      validateText: ValidateText.numValue),
-                  TextFieldBase("Defensa", defenzaText,
-                      validateText: ValidateText.numValue),
-                  TextFieldBase("Imagen", imgText),
-                  TextFieldBase("Pixel Art", imgPixelText),
-                  ElevatedButton(
-                      onPressed: () async {
-                        if (keyForm.currentState!.validate()) {
-                          await con.actualizarPersonaje(
-                              Personaje(
-                                  this.personaje.id,
-                                  nombreText.text,
-                                  fuerzaText.text,
-                                  defenzaText.text,
-                                  imgText.text,
-                                  false,
-                                  imgPixel: imgPixelText.text),
-                              context);
-                        }
-
-                        Navigator.pop(context);
-                      },
-                      child: Text("Agregar"))
-                ],
-              ),
-            )));
+                      Navigator.pop(context);
+                    },
+                    child: Text("Agregar"))
+              ],
+            ),
+          )),
+    );
   }
 }

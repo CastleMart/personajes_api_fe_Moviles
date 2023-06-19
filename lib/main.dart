@@ -38,8 +38,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     UsuariosController con = UsuariosController();
+
     super.initState();
-    print(con.getUsuario("mario"));
   }
 
   @override

@@ -3,7 +3,8 @@ class Usuario {
   String password;
   bool esAdmin;
   String nombre;
+  List<String?> favoritos = [];
 
   Usuario(this.nombreUsuario, this.nombre,
-      {this.esAdmin = false, this.password = "0"});
+      {this.favoritos = const [], this.esAdmin = false, this.password = "0"});
 }

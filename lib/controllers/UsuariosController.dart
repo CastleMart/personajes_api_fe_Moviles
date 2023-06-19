@@ -21,6 +21,7 @@ class UsuariosController {
     if (response.statusCode == 200) {
       final jsonData = jsonDecode(response.body);
       usuario = Usuario(jsonData["NombreUsuario"], jsonData["Nombre"],
+          favoritos: List<String?>.from(jsonData['Favoritos']),
           esAdmin: jsonData["Administrador"]);
     } else {
       return throw Exception("Falló la conexión.");
@@ -67,5 +68,20 @@ class UsuariosController {
 
   bool getEsAdmin() {
     return _esAdmin;
+  }
+
+  static Future<List<String>> postFavoritos(String nombreUsuario) async {
+    var url = Uri.parse(_urlEndpoint + nombreUsuario);
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final jsonData = jsonDecode(response.body);
+      print(jsonData["Favoritos"]["value"][0]);
+
+      List<String> lista = jsonData["Favoritos"]["value"];
+      return lista;
+    }
+
+    return [];
   }
 }
