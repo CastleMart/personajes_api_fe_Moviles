@@ -43,20 +43,6 @@ class _HomeState extends State<Home> {
     });
   }
 
-  paginarElementos2() {
-    int cantidadListaTotal = personajesList.length;
-    int elementosMostrar = numElementos * numPagina;
-    if (elementosMostrar <= cantidadListaTotal) {
-      Future.delayed(Duration(seconds: 3), () {
-        // Añade un retraso de 2 segundos
-        setState(() {
-          numPagina++;
-          paginarElementos();
-        });
-      });
-    }
-  }
-
   paginarElementos() {
     int cantidadListaTotal = personajesList.length;
     //int cantidadListaPagina = personajesListPagina.length;
@@ -75,23 +61,6 @@ class _HomeState extends State<Home> {
     }
 
     _isLoadingScroll = personajesListPagina.length < cantidadListaTotal;
-  }
-
-  pagina(int numPaginas) {
-    List<Personaje> personajesListGolbal = [];
-    int cantidadLista = personajesList.length;
-
-    if (numPaginas > cantidadLista) {
-      numPaginas = (cantidadLista - numPaginas) + numPaginas;
-    }
-
-    for (var i = 0; i < numPaginas; i++) {
-      personajesListGolbal.add(personajesList[i]);
-    }
-
-    return personajesListGolbal;
-
-    //for(var personaje in )
   }
 
   Future<void> obtenerPersonajes() async {
