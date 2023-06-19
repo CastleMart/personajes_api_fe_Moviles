@@ -36,7 +36,6 @@ class _HomeState extends State<Home> {
     controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
         setState(() {
-          _isLoadingScroll = true;
           numPagina++;
           paginarElementos();
         });
@@ -48,8 +47,12 @@ class _HomeState extends State<Home> {
     int cantidadListaTotal = personajesList.length;
     int elementosMostrar = numElementos * numPagina;
     if (elementosMostrar <= cantidadListaTotal) {
-      setState(() {
-        personajesList = personajesList.sublist(0, elementosMostrar);
+      Future.delayed(Duration(seconds: 3), () {
+        // Añade un retraso de 2 segundos
+        setState(() {
+          numPagina++;
+          paginarElementos();
+        });
       });
     }
   }
@@ -70,6 +73,8 @@ class _HomeState extends State<Home> {
         personajesListPagina.add(personajesList[i]);
       }
     }
+
+    _isLoadingScroll = personajesListPagina.length < cantidadListaTotal;
   }
 
   pagina(int numPaginas) {

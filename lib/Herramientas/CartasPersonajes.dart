@@ -300,12 +300,15 @@ class CartasPersonajes {
               },
             ),
           ));
+        } else if (index == personajes.length && isLoading) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 32),
+            child: Center(child: CircularProgressIndicator()),
+          );
         } else {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 32),
-            child: Center(
-              child: CircularProgressIndicator(),
-            ),
+            child: Center(child: Text("No hay más datos")),
           );
         }
       },
