@@ -18,26 +18,74 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   PersonajeController connect = PersonajeController();
-  late Future<List<Personaje>> personajes;
+  final controller = ScrollController();
+  //late Future<List<Personaje>> personajes;
   late List<Personaje> personajesList = [];
+  late List<Personaje> personajesListPagina = [];
+  int numPagina = 1;
+  int numElementos = 3;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    obtenerPersonajes();
+    numPagina = 1;
+
+    /*controller.addListener(() {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        setState(() {
+          numPagina++;
+          paginarElementos();
+        });
+      }
+    });*/
+  }
+
+  paginarElementos() {
+    int cantidadListaTotal = personajesList.length;
+    //int cantidadListaPagina = personajesListPagina.length;
+    int elementosMostrar = numElementos * numPagina;
+    if (elementosMostrar < cantidadListaTotal) {
+      for (var i = elementosMostrar - numElementos; i < elementosMostrar; i++) {
+        personajesListPagina.add(personajesList[i]);
+      }
+    } else {
+      int sobrante = cantidadListaTotal - elementosMostrar + numElementos;
+      for (var i = elementosMostrar - numElementos + sobrante;
+          i < cantidadListaTotal;
+          i++) {
+        personajesListPagina.add(personajesList[i]);
+      }
+    }
+  }
+
+  pagina(int numPaginas) {
+    List<Personaje> personajesListGolbal = [];
+    int cantidadLista = personajesList.length;
+
+    if (numPaginas > cantidadLista) {
+      numPaginas = (cantidadLista - numPaginas) + numPaginas;
+    }
+
+    for (var i = 0; i < numPaginas; i++) {
+      personajesListGolbal.add(personajesList[i]);
+    }
+
+    return personajesListGolbal;
+
+    //for(var personaje in )
   }
 
   Future<void> obtenerPersonajes() async {
     try {
-      personajes = connect.getPersonajes();
-      personajesList = await personajes;
+      personajesList = await connect.getPersonajes();
+      //() async => personajesList = await personajes;
+      paginarElementos();
     } catch (e) {
       print(e);
     }
-
     setState(() {
-      personajes = personajes;
+      //personajes = personajes;
       personajesList = personajesList;
       //_isLoading = false;
     });
@@ -72,8 +120,8 @@ class _HomeState extends State<Home> {
             color: Colors.white,
             displacement: 20.0,
             strokeWidth: 4,
-            child: CartasPersonajes.cardListView(
-                personajesList, context.read<PersonajesProvider>().esAdmin),
+            child: CartasPersonajes.cardListView(personajesListPagina,
+                context.read<PersonajesProvider>().esAdmin),
             onRefresh: () async {
               context.read<PersonajesProvider>().obtenerPersonaje();
               obtenerPersonajes();
