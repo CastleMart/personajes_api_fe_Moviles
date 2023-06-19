@@ -12,26 +12,37 @@ import '../providers/personajes_provider.dart';
 
 //void main() => runApp(const MyApp());
 
-class ActualizarPersonaje extends StatelessWidget {
+class ActualizarPersonaje extends StatefulWidget {
   final Personaje personaje;
 
   const ActualizarPersonaje(this.personaje, {super.key});
 
   @override
+  State<ActualizarPersonaje> createState() => _ActualizarPersonajeState();
+}
+
+class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
+  TextEditingController nombreText = TextEditingController();
+  TextEditingController fuerzaText = TextEditingController();
+  TextEditingController defenzaText = TextEditingController();
+  TextEditingController imgPixelText = TextEditingController();
+  TextEditingController imgText = TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+  PersonajeController con = PersonajeController();
+
+  @override
+  void initState() {
+    super.initState();
+    nombreText.text = widget.personaje.nombre;
+    fuerzaText.text = widget.personaje.fuerza;
+    defenzaText.text = widget.personaje.defenza;
+    imgPixelText.text = widget.personaje.imgPixel;
+    imgText.text = widget.personaje.img;
+  }
+
+  @override
   Widget build(BuildContext context) {
     //Controladores para recibir los campos
-    TextEditingController nombreText =
-        TextEditingController(text: this.personaje.nombre);
-    TextEditingController fuerzaText =
-        TextEditingController(text: this.personaje.fuerza);
-    TextEditingController defenzaText =
-        TextEditingController(text: this.personaje.defenza);
-    TextEditingController imgPixelText =
-        TextEditingController(text: this.personaje.imgPixel);
-    TextEditingController imgText =
-        TextEditingController(text: this.personaje.img);
-    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-    PersonajeController con = PersonajeController();
 
     return Scaffold(
       //TODO: Corregir bug del teclado
@@ -62,7 +73,7 @@ class ActualizarPersonaje extends StatelessWidget {
                       if (keyForm.currentState!.validate()) {
                         await con.actualizarPersonaje(
                             Personaje(
-                                this.personaje.id,
+                                this.widget.personaje.id,
                                 nombreText.text,
                                 fuerzaText.text,
                                 defenzaText.text,
