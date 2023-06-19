@@ -254,10 +254,12 @@ class CartasPersonajes {
     }
   }
 
-  static Widget cardListView(List<Personaje> personajes, bool tipoUsuario) {
+  static Widget cardListView(List<Personaje> personajes, bool tipoUsuario,
+      controller, bool isLoading) {
     List<int> id = [];
     return ListView.builder(
       itemCount: personajes.length + 1,
+      controller: controller,
       itemBuilder: (BuildContext context, int index) {
         if (index < personajes.length) {
           final personaje = personajes[index];

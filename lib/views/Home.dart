@@ -23,22 +23,35 @@ class _HomeState extends State<Home> {
   late List<Personaje> personajesList = [];
   late List<Personaje> personajesListPagina = [];
   int numPagina = 1;
-  int numElementos = 3;
+  int numElementos = 7;
   bool _isLoading = true;
+  bool _isLoadingScroll = true;
 
   @override
   void initState() {
     super.initState();
     numPagina = 1;
-
-    /*controller.addListener(() {
+    obtenerPersonajes();
+    //paginarElementos();
+    controller.addListener(() {
       if (controller.position.maxScrollExtent == controller.offset) {
         setState(() {
+          _isLoadingScroll = true;
           numPagina++;
           paginarElementos();
         });
       }
-    });*/
+    });
+  }
+
+  paginarElementos2() {
+    int cantidadListaTotal = personajesList.length;
+    int elementosMostrar = numElementos * numPagina;
+    if (elementosMostrar <= cantidadListaTotal) {
+      setState(() {
+        personajesList = personajesList.sublist(0, elementosMostrar);
+      });
+    }
   }
 
   paginarElementos() {
@@ -51,7 +64,7 @@ class _HomeState extends State<Home> {
       }
     } else {
       int sobrante = cantidadListaTotal - elementosMostrar + numElementos;
-      for (var i = elementosMostrar - numElementos + sobrante;
+      for (var i = elementosMostrar - numElementos;
           i < cantidadListaTotal;
           i++) {
         personajesListPagina.add(personajesList[i]);
@@ -78,16 +91,15 @@ class _HomeState extends State<Home> {
 
   Future<void> obtenerPersonajes() async {
     try {
+      numPagina = 1;
+      personajesListPagina.clear();
       personajesList = await connect.getPersonajes();
-      //() async => personajesList = await personajes;
       paginarElementos();
     } catch (e) {
       print(e);
     }
     setState(() {
-      //personajes = personajes;
-      personajesList = personajesList;
-      //_isLoading = false;
+      _isLoading = false;
     });
   }
 
@@ -115,18 +127,30 @@ class _HomeState extends State<Home> {
               ),
             ],
           ),
-          body: RefreshIndicator(
-            backgroundColor: Colors.purple,
-            color: Colors.white,
-            displacement: 20.0,
-            strokeWidth: 4,
-            child: CartasPersonajes.cardListView(personajesListPagina,
-                context.read<PersonajesProvider>().esAdmin),
-            onRefresh: () async {
-              context.read<PersonajesProvider>().obtenerPersonaje();
-              obtenerPersonajes();
-            },
-          ),
+          body: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : RefreshIndicator(
+                  backgroundColor: Colors.purple,
+                  color: Colors.white,
+                  displacement: 20.0,
+                  strokeWidth: 4,
+                  child: CartasPersonajes.cardListView(
+                      personajesListPagina,
+                      context.read<PersonajesProvider>().esAdmin,
+                      controller,
+                      _isLoadingScroll),
+                  onRefresh: () async {
+                    setState(() {
+                      _isLoading = true;
+                    });
+                    await obtenerPersonajes();
+                    setState(() {
+                      _isLoading = false;
+                    });
+                  },
+                ),
         ),
       ),
     )

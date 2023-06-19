@@ -20,8 +20,32 @@ class PersonajeController {
 
     if (response.statusCode == 200) {
       personajes = [];
-      final jsonData = jsonDecode(response.body);
+      final jsonData = await jsonDecode(response.body);
 
+      for (var item in jsonData) {
+        personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
+            item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"],
+            imgPixel: item["ImgPixel"]));
+      }
+    } else {
+      throw Exception("Falló la conexión.");
+    }
+
+    return personajes;
+  }
+
+  ///Método que regresa todos los personajes disponibles en la API.
+  ///
+  ///Devuelve como resultado [personajes]
+  getPersonajesJson() async {
+    List<Personaje> personajes = [];
+    var url = Uri.parse(_urlEndpoint);
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      personajes = [];
+      final jsonData = jsonDecode(response.body);
+      return jsonData;
       for (var item in jsonData) {
         personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
             item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"],
