@@ -46,7 +46,8 @@ class _SingUpState extends State<SingUp> {
                     children: [
                       CircleAvatar(
                         radius: 100.0,
-                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(
+                            "https://i.pinimg.com/474x/12/56/de/1256def18416a032b0a118a0965714bd--identity-design-design-logos.jpg"),
                       ),
                       Text(
                         'Regístrate',

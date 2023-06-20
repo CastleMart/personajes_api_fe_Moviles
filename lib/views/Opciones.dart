@@ -25,30 +25,42 @@ class Opciones extends StatelessWidget {
             child: ListView(
           children: [
             Card(
+              margin: EdgeInsets.fromLTRB(25, 40, 25, 40),
+              color: Color.fromARGB(255, 212, 217, 246),
+              shadowColor: Colors.green,
+              //shadowColor: Color.fromARGB(255, 65, 188, 67),
+              elevation: 7,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50.0),
+                borderRadius: BorderRadius.circular(20.0),
+                side: BorderSide(color: Colors.purple.shade300),
               ),
-              color: Colors.blue,
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(children: [
                   CircleAvatar(
                     radius: 100.0,
-                    backgroundColor: Colors.grey,
+                    backgroundImage: NetworkImage(
+                        "https://i.pinimg.com/474x/12/56/de/1256def18416a032b0a118a0965714bd--identity-design-design-logos.jpg"),
                   ),
-                  Title(
-                      color: Colors.black,
-                      child: Text(
-                        "Nombre de usuario",
-                        style: TextStyle(fontFamily: 'Arial', fontSize: 20.0),
-                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    child: Title(
+                        color: Colors.black,
+                        child: Text(
+                          "Nombre de usuario",
+                          style: TextStyle(fontFamily: 'Arial', fontSize: 20.0),
+                        )),
+                  ),
                   Text(nombreUsuario),
-                  Title(
-                      color: Colors.black,
-                      child: Text(
-                        "Nombre completo",
-                        style: TextStyle(fontFamily: 'Arial', fontSize: 20.0),
-                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    child: Title(
+                        color: Colors.black,
+                        child: Text(
+                          "Nombre completo",
+                          style: TextStyle(fontFamily: 'Arial', fontSize: 20.0),
+                        )),
+                  ),
                   Text(nombreCompleto)
                 ]),
               ),
