@@ -67,7 +67,8 @@ class _LoginState extends State<Login> {
                                   userText.text, passwordText.text)) {
                                 context
                                     .read<PersonajesProvider>()
-                                    .setTipoUsuario(userCon.getEsAdmin());
+                                    .setTipoUsuario(
+                                        UsuariosController.getEsAdmin());
                                 context.read<PersonajesProvider>().setUsuarios(
                                     await userCon.getUsuario(userText.text));
 

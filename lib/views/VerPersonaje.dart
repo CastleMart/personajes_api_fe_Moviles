@@ -67,7 +67,7 @@ class _VerPersonajeState extends State<VerPersonaje> {
               },
             )),
         child: const Center(
-            child: CircularProgressIndicator(backgroundColor: Colors.white)));
+            child: CircularProgressIndicator(backgroundColor: Colors.purple)));
   }
 
   _mostarDatos(Personaje personaje) {

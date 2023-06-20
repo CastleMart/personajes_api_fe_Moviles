@@ -55,6 +55,7 @@ class Disenios {
         context: context,
         builder: (context) => AlertDialog(
               content: const Text("¿Desea borrar al Personaje?"),
+              backgroundColor: Color.fromARGB(255, 209, 216, 255),
               actions: [
                 const CancelActionButton(), //ConfirmActionButton(),
                 ConfirmActionButton(

@@ -18,7 +18,7 @@ class _CancelActionButtonState extends State<CancelActionButton> {
       onPressed: () => Navigator.pop(context),
       style: TextButton.styleFrom(
           foregroundColor: Colors.white,
-          backgroundColor: const Color.fromRGBO(23, 21, 21, 1)),
+          backgroundColor: Color.fromARGB(255, 77, 66, 99)),
       child: const Text("Cancelar"),
     );
   }

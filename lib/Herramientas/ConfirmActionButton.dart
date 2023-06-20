@@ -25,8 +25,8 @@ class _ConfirmActionButtonState extends State<ConfirmActionButton> {
               Navigator.pop(context)
             },
         style: TextButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: const Color.fromARGB(255, 104, 14, 14)),
+            foregroundColor: Color.fromARGB(255, 255, 255, 255),
+            backgroundColor: Color.fromARGB(255, 148, 27, 79)),
         child: const Text("Aceptar"));
   }
 }
