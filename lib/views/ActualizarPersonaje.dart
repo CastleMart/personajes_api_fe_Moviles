@@ -81,9 +81,8 @@ class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
                                 false,
                                 imgPixel: imgPixelText.text),
                             context);
+                        Navigator.pop(context);
                       }
-
-                      Navigator.pop(context);
                     },
                     child: Text("Agregar"))
               ],

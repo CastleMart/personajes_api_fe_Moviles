@@ -66,7 +66,7 @@ class UsuariosController {
     return false;
   }
 
-  bool getEsAdmin() {
+  static bool getEsAdmin() {
     return _esAdmin;
   }
 

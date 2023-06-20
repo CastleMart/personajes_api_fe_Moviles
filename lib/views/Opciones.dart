@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:personajes_api_fe/controllers/UsuariosController.dart';
 import 'package:personajes_api_fe/models/Usuario.dart';
 import 'package:personajes_api_fe/views/Home.dart';
 import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
@@ -69,11 +70,15 @@ class Opciones extends StatelessWidget {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => Login()));
             }),
-            tarjetas(Icon(Icons.change_circle), () {
-              context.read<PersonajesProvider>().cambiarTipoUsuario();
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) => PantallaPrincipal()));
-            }),
+            Visibility(
+                visible: UsuariosController.getEsAdmin(),
+                child: tarjetas(Icon(Icons.change_circle), () {
+                  context.read<PersonajesProvider>().cambiarTipoUsuario();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PantallaPrincipal()));
+                })),
           ],
         )));
   }

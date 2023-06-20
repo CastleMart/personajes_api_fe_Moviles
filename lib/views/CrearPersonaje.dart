@@ -60,12 +60,13 @@ class CrearPersonaje extends StatelessWidget {
                                   false,
                                   imgPixel: imgPixelText.text),
                               context);
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PantallaPrincipal()),
+                          );
                         }
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PantallaPrincipal()),
-                        );
+
                         //Navigator.pop(context);
                       },
                       child: Text("Agregar"))
