@@ -85,47 +85,45 @@ class _HomeState extends State<Home> {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: SafeArea(
-        child: Scaffold(
-          //resizeToAvoidBottomInset: false,
-          appBar: AppBar(
-            title: Text("Personajes Fire Emblem"),
-            actions: [
-              Builder(
-                builder: (context) => IconButton(
-                  onPressed: () {
-                    showSearch(context: context, delegate: Buscador());
-                  },
-                  icon: Icon(Icons.search),
-                ),
+      home: Scaffold(
+        //resizeToAvoidBottomInset: false,
+        appBar: AppBar(
+          title: Text("Personajes Fire Emblem"),
+          actions: [
+            Builder(
+              builder: (context) => IconButton(
+                onPressed: () {
+                  showSearch(context: context, delegate: Buscador());
+                },
+                icon: Icon(Icons.search),
               ),
-            ],
-          ),
-          body: _isLoading
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : RefreshIndicator(
-                  backgroundColor: Colors.purple,
-                  color: Colors.white,
-                  displacement: 20.0,
-                  strokeWidth: 4,
-                  child: CartasPersonajes.cardListView(
-                      personajesListPagina,
-                      context.read<PersonajesProvider>().esAdmin,
-                      controller,
-                      _isLoadingScroll),
-                  onRefresh: () async {
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    await obtenerPersonajes();
-                    setState(() {
-                      _isLoading = false;
-                    });
-                  },
-                ),
+            ),
+          ],
         ),
+        body: _isLoading
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                backgroundColor: Colors.purple,
+                color: Colors.white,
+                displacement: 20.0,
+                strokeWidth: 4,
+                child: CartasPersonajes.cardListView(
+                    personajesListPagina,
+                    context.read<PersonajesProvider>().esAdmin,
+                    controller,
+                    _isLoadingScroll),
+                onRefresh: () async {
+                  setState(() {
+                    _isLoading = true;
+                  });
+                  await obtenerPersonajes();
+                  setState(() {
+                    _isLoading = false;
+                  });
+                },
+              ),
       ),
     )
         //child: Center(

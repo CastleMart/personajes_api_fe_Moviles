@@ -33,7 +33,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   List<BottomNavigationBarItem> _navAdmin = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     BottomNavigationBarItem(
-        icon: Icon(Icons.create), label: "Ingresar Personaje"),
+        icon: Icon(Icons.add_box), label: "Ingresar Personaje"),
     BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Opciones")
   ];
   List<BottomNavigationBarItem> _navUsuario = [

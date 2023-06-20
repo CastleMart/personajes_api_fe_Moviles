@@ -51,8 +51,11 @@ class _FavoritosPageState extends State<FavoritosPage> {
     List<Personaje> personajes = [];
     obtenerPersonajesFavoritos(usuario);
 
-    return SafeArea(
-      child: _isLoading
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Favoritos"),
+      ),
+      body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
