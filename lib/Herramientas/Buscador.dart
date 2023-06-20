@@ -102,8 +102,13 @@ class Buscador extends SearchDelegate {
   Widget _buildTarjeta(
       Personaje personaje, BuildContext context, bool tipoUsuario) {
     return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      elevation: 2,
+      color: Color.fromARGB(255, 182, 192, 253),
+      shadowColor: Color.fromARGB(255, 65, 188, 67),
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+        side: BorderSide(color: Colors.purple.shade300),
+      ),
       child: ListTile(
         title: Text(personaje.nombre),
         subtitle: Column(

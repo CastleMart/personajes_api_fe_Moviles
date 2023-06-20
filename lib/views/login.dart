@@ -19,15 +19,21 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  @override
-  Widget build(BuildContext context) {
-    TextEditingController userText = TextEditingController(text: "");
-    TextEditingController passwordText = TextEditingController(text: "");
-    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-    PersonajeController con = PersonajeController();
-    UsuariosController userCon = UsuariosController();
-    bool verificar = false;
+  TextEditingController userText = TextEditingController();
+  TextEditingController passwordText = TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+  PersonajeController con = PersonajeController();
+  UsuariosController userCon = UsuariosController();
+  bool verificar = false;
 
+  @override
+  void initState() {
+    super.initState();
+    userText.text = "";
+    passwordText.text = "";
+  }
+
+  Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
             padding: const EdgeInsets.all(10.0),

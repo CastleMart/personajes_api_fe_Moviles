@@ -22,15 +22,19 @@ class Botones {
   }
 
   static Widget botonEliminarPersonaje(context, id) {
-    return ElevatedButton(
-        onPressed: () async {
-          await Disenios.alertaBorrar(context, id);
+    return IconButton(
+      onPressed: () async {
+        await Disenios.alertaBorrar(context, id);
 
-          //MaterialPageRoute(builder: (context) => new MyApp());
-          //Navigator.pop(context);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
-        },
-        child: Text("Borrar"));
+        //MaterialPageRoute(builder: (context) => new MyApp());
+        //Navigator.pop(context);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Home()));
+      },
+      icon: Icon(
+        Icons.delete,
+        color: Colors.deepPurple,
+      ),
+    );
   }
 }

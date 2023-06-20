@@ -46,43 +46,72 @@ class _VerPersonajeUserState extends State<VerPersonajeUser> {
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
               personaje = snapshot.requireData;
-              return Center(
-                  child: Card(
-                      child: Column(
-                children: [
-                  //textos.value(TextEditingValue(text: item.nombre)),
-                  Expanded(
-                    child: Image.network(
-                      personaje.img,
-                      errorBuilder: (BuildContext context, Object exception,
-                          StackTrace? stackTrace) {
-                        // Error handling code goes here
-                        return Text('Imagen no encontrada');
-                      },
-                    ),
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Disenios.atributosPersonaje(
-                          "Nombre", personaje.nombre, 8.0),
-                      Disenios.atributosPersonaje(
-                          "Fuerza", personaje.fuerza, 8.0),
-                      Disenios.atributosPersonaje(
-                          "Defensa", personaje.defenza, 8.0),
-                    ],
-                  ),
-                ],
-              )));
+              return _mostarDatos(personaje);
             } else if (snapshot.hasError) {
               return Text("Error");
             }
-
             return Center(
               child: CircularProgressIndicator(),
             );
           },
         ));
+  }
+
+  _mostarDatos(Personaje personaje) {
+    return Center(
+      child: Container(
+          //height: 600,
+          child: ListView(
+        children: [
+          Card(
+            margin: EdgeInsets.all(25),
+            color: Color.fromARGB(255, 212, 217, 246),
+            //shadowColor: Color.fromARGB(255, 65, 188, 67),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.purple.shade300),
+            ),
+            child: Expanded(
+              child: Image.network(
+                personaje.img,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  // Error handling code goes here
+                  return Text('Imagen no encontrada');
+                },
+              ),
+            ),
+          ),
+          Card(
+            margin: EdgeInsets.fromLTRB(25, 0, 25, 25),
+            color: Color.fromARGB(255, 212, 217, 246),
+            //shadowColor: Color.fromARGB(255, 65, 188, 67),
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              side: BorderSide(color: Colors.purple.shade300),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    personaje.nombre,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
+                  Disenios.atributosPersonaje(
+                      "Defensa", personaje.defenza, 8.0),
+                ],
+              ),
+            ),
+          ),
+        ],
+      )),
+    );
   }
 }

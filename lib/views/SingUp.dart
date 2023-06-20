@@ -9,17 +9,32 @@ import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
 import '../controllers/UsuariosController.dart';
 
-class SingUp extends StatelessWidget {
+class SingUp extends StatefulWidget {
   const SingUp({super.key});
 
   @override
+  State<SingUp> createState() => _SingUpState();
+}
+
+class _SingUpState extends State<SingUp> {
+  TextEditingController userText = TextEditingController();
+  TextEditingController nombreText = TextEditingController();
+  TextEditingController passwordText = TextEditingController();
+  TextEditingController passwordRepiteText = TextEditingController();
+  GlobalKey<FormState> keyForm = GlobalKey<FormState>();
+  UsuariosController conUsuario = UsuariosController();
+
+  @override
+  void initState() {
+    super.initState();
+    userText.text = "";
+    nombreText.text = "";
+    passwordText.text = "";
+    passwordRepiteText.text = "";
+  }
+
+  @override
   Widget build(BuildContext context) {
-    TextEditingController userText = TextEditingController(text: "");
-    TextEditingController nombreText = TextEditingController(text: "");
-    TextEditingController passwordText = TextEditingController(text: "");
-    TextEditingController passwordRepiteText = TextEditingController(text: "");
-    GlobalKey<FormState> keyForm = GlobalKey<FormState>();
-    UsuariosController conUsuario = UsuariosController();
     return Scaffold(
         body: Padding(
             padding: const EdgeInsets.all(10.0),

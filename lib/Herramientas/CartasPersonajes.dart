@@ -78,35 +78,49 @@ class CartasPersonajes {
               id.reduce((value, element) => value > element ? value : element);
           print(idMayor);
           return Card(
+              color: Color.fromARGB(255, 241, 233, 248),
+              shadowColor: Color.fromARGB(255, 65, 188, 67),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                side: BorderSide(color: Colors.purple.shade300),
+              ),
               //shape: ,
               child: Container(
-            alignment: AlignmentDirectional.center,
-            height: 100,
-            child: ListTile(
-              leading: CircleAvatar(
-                  backgroundImage: NetworkImage(personajes[index].imgPixel)),
-              trailing: _seleccionarCardUsuario(personajes[index],
-                  context.read<PersonajesProvider>().usuario, context),
-              title: Text(personajes[index].nombre),
-              onTap: () {
-                if (tipoUsuario) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VerPersonaje(personaje),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VerPersonajeUser(personaje),
-                    ),
-                  );
-                }
-              },
-            ),
-          ));
+                alignment: AlignmentDirectional.center,
+                height: 100,
+                child: ListTile(
+                  leading: CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.yellow[50],
+                      backgroundImage:
+                          NetworkImage(personajes[index].imgPixel)),
+                  trailing: _seleccionarCardUsuario(personajes[index],
+                      context.read<PersonajesProvider>().usuario, context),
+                  title: Text(
+                    personajes[index].nombre,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    if (tipoUsuario) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerPersonaje(personaje),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerPersonajeUser(personaje),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ));
         } else if (index == personajes.length && isLoading) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 32),
@@ -138,25 +152,39 @@ class CartasPersonajes {
               id.reduce((value, element) => value > element ? value : element);
           print(idMayor);
           return Card(
-              //shape: ,
+              color: Color.fromARGB(255, 182, 192, 253),
+              shadowColor: Color.fromARGB(255, 65, 188, 67),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+                side: BorderSide(color: Colors.purple.shade300),
+              ),
               child: Container(
-            alignment: AlignmentDirectional.center,
-            height: 100,
-            child: ListTile(
-                leading: CircleAvatar(
-                    backgroundImage: NetworkImage(personajes[index].imgPixel)),
-                trailing: _seleccionarCardUsuario(personajes[index],
-                    context.read<PersonajesProvider>().usuario, context),
-                title: Text(personajes[index].nombre),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => VerPersonajeUser(personaje),
+                alignment: AlignmentDirectional.center,
+                height: 100,
+                child: ListTile(
+                    leading: CircleAvatar(
+                        radius: 25,
+                        backgroundColor: Colors.yellow[50],
+                        backgroundImage:
+                            NetworkImage(personajes[index].imgPixel)),
+                    trailing: _seleccionarCardUsuario(personajes[index],
+                        context.read<PersonajesProvider>().usuario, context),
+                    title: Text(
+                      personajes[index].nombre,
+                      textAlign: TextAlign.center,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  );
-                }),
-          ));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerPersonajeUser(personaje),
+                        ),
+                      );
+                    }),
+              ));
         }
       },
     );
@@ -207,7 +235,7 @@ class _BotonFavoritoState extends State<BotonFavorito> {
         onPressed: toggleFavorito,
         icon: Icon(
           isFavorito ? Icons.star : Icons.star_border,
-          color: Colors.purple,
+          color: Colors.orange[600],
         ),
       ),
     );

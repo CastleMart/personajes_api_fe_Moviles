@@ -16,12 +16,11 @@ class Disenios {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Container(
-              child: Text(campo),
+            Text(
+              campo,
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
-            Container(
-              child: Text(valor),
-            ),
+            Text(valor),
           ]),
     );
   }
