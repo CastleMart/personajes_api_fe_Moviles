@@ -23,9 +23,7 @@ class TextFieldBase extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            //Text(texto),
             TextFormField(
-              //enableInteractiveSelection: false,
               controller: controller,
               maxLength: ValidateMaxLength(),
               obscureText: validateObscureText(),
@@ -35,9 +33,6 @@ class TextFieldBase extends StatelessWidget {
                   labelText: texto,
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0))),
-              //! si lo dejo en True, se activa el teclado solo, pero cuando trato de cerrarlo,
-              //! me reinicia los valores iniciales y se vuelve a abrir. Si lo dejo false, al presionar un campo,
-              //! se abre y cierra automáticamente el teclado.
               autofocus: false,
               validator: (String? value) {
                 return ValidateStructure(value);
@@ -47,6 +42,9 @@ class TextFieldBase extends StatelessWidget {
         ));
   }
 
+  ///Método que valida el tamaño máximo que puede tener un tipo
+  ///de campo seleccionado.
+  ///
   ValidateMaxLength() {
     switch (validateText) {
       case ValidateText.name:
@@ -66,6 +64,9 @@ class TextFieldBase extends StatelessWidget {
     }
   }
 
+  ///Método que valida la estructura de  un tipo
+  ///de campo seleccionado.
+  ///
   ValidateStructure(String? value) {
     if (!notRequire && value!.isEmpty) {
       return "El campo $texto es requerido";
@@ -98,6 +99,9 @@ class TextFieldBase extends StatelessWidget {
     }
   }
 
+  ///Método que valida el el formato de un tipo
+  ///de campo seleccionado.
+  ///
   ValidateInputFormater() {
     switch (validateText) {
       case ValidateText.name:
@@ -112,6 +116,8 @@ class TextFieldBase extends StatelessWidget {
     }
   }
 
+  ///Método que valida si debe mostrar lo que se escribe.
+  ///
   validateObscureText() {
     switch (validateText) {
       case ValidateText.password:

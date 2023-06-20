@@ -15,13 +15,14 @@ import '../views/VerPersonaje.dart';
 import 'Botones.dart';
 import 'disenios.dart';
 
+///Clase que genera las tarjetas a mostar en la aplicación.
 class CartasPersonajes {
   static int idMayor = 0;
   static List<Personaje> personajesList = [];
 
 //--------------------------------------------------
 
-  ///Verifica qué tipo de usuario es el que ingresó a la aplicación y muestra
+  ///Método que verifica qué tipo de usuario es el que ingresó a la aplicación y muestra
   ///opciones según sea el caso.
   ///
   ///Esta función que recibe un [Personaje] y un [BuildContext].
@@ -60,6 +61,11 @@ class CartasPersonajes {
     }
   }
 
+  ///Método que crea una lista de [Card] de los personajes, esta clase recibe
+  /// una [List] de tipo [Personaje], el tipo de usuario entre otros.
+  /// También se adapta la apariencia según sea  el tipo de usuario.
+  ///
+  ///Se retorna un [Widget].
   static Widget cardListView(List<Personaje> personajes, bool tipoUsuario,
       controller, bool isLoading) {
     List<int> id = [];
@@ -77,6 +83,8 @@ class CartasPersonajes {
           idMayor =
               id.reduce((value, element) => value > element ? value : element);
           print(idMayor);
+
+          // * Creación de la tarjeta
           return Card(
               color: Color.fromARGB(255, 241, 233, 248),
               shadowColor: Color.fromARGB(255, 65, 188, 67),
@@ -85,7 +93,6 @@ class CartasPersonajes {
                 borderRadius: BorderRadius.circular(20.0),
                 side: BorderSide(color: Colors.purple.shade300),
               ),
-              //shape: ,
               child: Container(
                 alignment: AlignmentDirectional.center,
                 height: 100,
@@ -102,6 +109,7 @@ class CartasPersonajes {
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
+                  //* Según sea el tipo de usuario, se mostrará la vista correspondiente
                   onTap: () {
                     if (tipoUsuario) {
                       Navigator.push(
@@ -121,6 +129,7 @@ class CartasPersonajes {
                   },
                 ),
               ));
+          //* verificar si se ha terminado la lista y ver si no hay más elementos por mostrar.
         } else if (index == personajes.length && isLoading) {
           return const Padding(
             padding: EdgeInsets.symmetric(vertical: 32),
@@ -136,6 +145,8 @@ class CartasPersonajes {
     );
   }
 
+  ///Vista que obtendrá las cartas en la pantalla de favoritos.
+  ///Recibe nadamás a una lista de [Personaje]
   static Widget cardListViewFavoritos(List<Personaje> personajes) {
     List<int> id = [];
     return ListView.builder(
@@ -191,6 +202,7 @@ class CartasPersonajes {
   }
 }
 
+///Clase que realiza las acciones del botón de favoritos.
 class BotonFavorito extends StatefulWidget {
   final bool visible;
   final Personaje personaje;
@@ -213,7 +225,8 @@ class _BotonFavoritoState extends State<BotonFavorito> {
     isFavorito = widget.usuario.favoritos.contains(widget.personaje.id);
   }
 
-  Future<void> toggleFavorito() async {
+  ///Método que cambia la apariencia del botón y lo actualiza.
+  Future<void> pulsarBotonFavorito() async {
     final favoritos = widget.usuario.favoritos;
     if (isFavorito) {
       favoritos.remove(widget.personaje.id);
@@ -232,7 +245,7 @@ class _BotonFavoritoState extends State<BotonFavorito> {
     return Visibility(
       visible: widget.visible,
       child: IconButton(
-        onPressed: toggleFavorito,
+        onPressed: pulsarBotonFavorito,
         icon: Icon(
           isFavorito ? Icons.star : Icons.star_border,
           color: Colors.orange[600],

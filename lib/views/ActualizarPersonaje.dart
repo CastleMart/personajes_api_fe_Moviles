@@ -22,6 +22,7 @@ class ActualizarPersonaje extends StatefulWidget {
 }
 
 class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
+  //Inicialización de los controladores necesarios para llenar los campos.
   TextEditingController nombreText = TextEditingController();
   TextEditingController fuerzaText = TextEditingController();
   TextEditingController defenzaText = TextEditingController();
@@ -35,7 +36,7 @@ class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
     super.initState();
     nombreText.text = widget.personaje.nombre;
     fuerzaText.text = widget.personaje.fuerza;
-    defenzaText.text = widget.personaje.defenza;
+    defenzaText.text = widget.personaje.defensa;
     imgPixelText.text = widget.personaje.imgPixel;
     imgText.text = widget.personaje.img;
   }
@@ -45,7 +46,6 @@ class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
     //Controladores para recibir los campos
 
     return Scaffold(
-      //TODO: Corregir bug del teclado
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: const Text('Actualizar personaje'),
@@ -57,6 +57,7 @@ class _ActualizarPersonajeState extends State<ActualizarPersonaje> {
             child: ListView(
               children: [
                 //Utilización de un método creado para las validaciones.
+                //* Obtención del texto de los campos.
                 TextFieldBase(
                   "Nombre",
                   nombreText,

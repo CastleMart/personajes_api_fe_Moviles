@@ -1,16 +1,13 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/controllers/UsuariosController.dart';
-import 'package:personajes_api_fe/models/Usuario.dart';
-import 'package:personajes_api_fe/views/Home.dart';
 import 'package:personajes_api_fe/views/PantallaPrincipal.dart';
 import 'package:personajes_api_fe/views/login.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/personajes_provider.dart';
 
+///Clase que crea la pantalla de opciones y se adapta según sea el tipo usuario.
 class Opciones extends StatelessWidget {
   const Opciones({super.key});
 
@@ -25,11 +22,11 @@ class Opciones extends StatelessWidget {
         body: Center(
             child: ListView(
           children: [
+            //* Carta de información del usuario.
             Card(
               margin: EdgeInsets.fromLTRB(25, 40, 25, 40),
               color: Color.fromARGB(255, 212, 217, 246),
               shadowColor: Colors.green,
-              //shadowColor: Color.fromARGB(255, 65, 188, 67),
               elevation: 7,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
@@ -70,6 +67,7 @@ class Opciones extends StatelessWidget {
               Navigator.pushReplacement(
                   context, MaterialPageRoute(builder: (context) => Login()));
             }),
+            //! Muestra el botón de cambiar vista si el usuario es administrador
             Visibility(
                 visible: UsuariosController.getEsAdmin(),
                 child: tarjetas(Icon(Icons.change_circle), () {
@@ -83,6 +81,7 @@ class Opciones extends StatelessWidget {
         )));
   }
 
+  ///Método que genera unos botones los cuales te mandan a una pantalla
   tarjetas(Icon icono, pantalla) {
     return Container(
         height: 100,

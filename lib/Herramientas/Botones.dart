@@ -9,18 +9,7 @@ import '../views/CrearPersonaje.dart';
 import 'disenios.dart';
 
 class Botones {
-  static Widget botonCrearPersonaje(context) {
-    return Padding(
-      padding: EdgeInsets.all(8.0),
-      child: ElevatedButton(
-          onPressed: () async {
-            await Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CrearPersonaje()));
-          },
-          child: Text("Ingresar Personaje")),
-    );
-  }
-
+  ///Botón [Widget] que se encarga de eliminar un personaje por medio de su [id].
   static Widget botonEliminarPersonaje(context, id) {
     return IconButton(
       onPressed: () async {

@@ -3,8 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../providers/personajes_provider.dart';
 
-/// Clase que crear un widget de confirmación de acción para un uso
-/// general de la aplicación
+/// Clase que crear un widget de confirmación de acción
 class ConfirmActionButton extends StatefulWidget {
   final Function onPressed;
   const ConfirmActionButton({super.key, required this.onPressed});
@@ -16,8 +15,6 @@ class ConfirmActionButton extends StatefulWidget {
 class _ConfirmActionButtonState extends State<ConfirmActionButton> {
   @override
   Widget build(BuildContext context) {
-    /// Se retorna un widget de tipo TextButton el cual recibe una función
-    /// para poder realizar cualquier acción que se le mando por el parámetro
     return TextButton(
         onPressed: () => {
               widget.onPressed(),

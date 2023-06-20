@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//! Deprecate
 class NavBar extends StatelessWidget {
   const NavBar({super.key});
 

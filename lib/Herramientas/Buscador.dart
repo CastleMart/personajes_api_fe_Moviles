@@ -8,17 +8,21 @@ import 'package:provider/provider.dart';
 import '../controllers/PersonajeController.dart';
 import '../providers/personajes_provider.dart';
 
+///Clase que realiza los filtros necesarios para la realización de la búsqueda.
 class Buscador extends SearchDelegate {
   List<Personaje> listaDeBusqueda = [];
   PersonajeController conn = PersonajeController();
 
   Buscador() {}
 
+  ///Obtención de una [List] de [Personaje] por medio de la clase [PersonajeController].
   static Future<List<Personaje>> _listaPersonajes() {
     PersonajeController con = PersonajeController();
     return con.getPersonajes();
   }
 
+  ///Método de [Buscador] que elimina el contenido de
+  ///la barra de búsqueda.
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -31,6 +35,7 @@ class Buscador extends SearchDelegate {
     ];
   }
 
+  ///Método que programa la función de terminar la búsqueda.
   @override
   Widget? buildLeading(BuildContext context) {
     return IconButton(
@@ -63,6 +68,7 @@ class Buscador extends SearchDelegate {
             );
           }
 
+          // * Enlistado de los perosnajes que coincidan con la búqueda.
           List<Personaje> sugerencias = listaDeBusqueda.where((personaje) {
             return personaje.nombre.toLowerCase().contains(query.toLowerCase());
           }).toList();
@@ -78,27 +84,13 @@ class Buscador extends SearchDelegate {
               itemBuilder: (context, index) {
                 return _buildTarjeta(sugerencias[index], context,
                     context.watch<PersonajesProvider>().esAdmin);
-
-                /*ListTile(
-                  title: Text(sugerencias[index].nombre),
-                  onTap: () {
-                    showResults(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            VerPersonajeUser(sugerencias[index]),
-                      ),
-                    );
-                  },
-                );
-              */
               });
         }
       },
     );
   }
 
+  ///Método que construye la vista del buscador.
   Widget _buildTarjeta(
       Personaje personaje, BuildContext context, bool tipoUsuario) {
     return Card(
@@ -115,7 +107,7 @@ class Buscador extends SearchDelegate {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('Fuerza: ${personaje.fuerza}'),
-            Text('Defensa: ${personaje.defenza}'),
+            Text('Defensa: ${personaje.defensa}'),
           ],
         ),
         leading: CircleAvatar(

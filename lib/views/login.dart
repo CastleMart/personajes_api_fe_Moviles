@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/disenios.dart';
 import 'package:personajes_api_fe/controllers/UsuariosController.dart';
@@ -11,6 +10,7 @@ import '../common/enums.dart';
 import '../controllers/PersonajeController.dart';
 import '../providers/personajes_provider.dart';
 
+///Clase que se dedica a realizar las acciones para iniciar sesión.
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -19,6 +19,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  //Inicialización de los controladores necesarios para llenar los campos.
   TextEditingController userText = TextEditingController();
   TextEditingController passwordText = TextEditingController();
   GlobalKey<FormState> keyForm = GlobalKey<FormState>();
@@ -42,12 +43,14 @@ class _LoginState extends State<Login> {
                 child: ListView(children: <Widget>[
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    //Vista del avatar de la aplicación
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         radius: 100.0,
                         backgroundImage: NetworkImage(
                             "https://i.pinimg.com/474x/12/56/de/1256def18416a032b0a118a0965714bd--identity-design-design-logos.jpg"),
                       ),
+                      //Visualización de los campos
                       Text(
                         'Ingresar',
                         style: TextStyle(fontFamily: 'Arial', fontSize: 50.0),
@@ -61,6 +64,8 @@ class _LoginState extends State<Login> {
                           validateText: ValidateText.password),
                       SizedBox(
                         width: double.maxFinite,
+                        //* Al precionarse el botón, se realizan las validaciones
+                        //* necesarias para inicar sesión.
                         child: ElevatedButton(
                             onPressed: () async {
                               if (await userCon.verificarPassword(
@@ -81,8 +86,6 @@ class _LoginState extends State<Login> {
                                 Disenios.verBarraAccion(
                                     "Contraseña o usuario incorrecto", context);
                               }
-                              // ! Checar bien código
-                              //if (keyForm.currentState!.validate()) {}
                             },
                             child: const Text(
                               "Entrar",

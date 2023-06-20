@@ -118,7 +118,7 @@ class _VerPersonajeState extends State<VerPersonaje> {
                   ),
                   Disenios.atributosPersonaje("Fuerza", personaje.fuerza, 8.0),
                   Disenios.atributosPersonaje(
-                      "Defensa", personaje.defenza, 8.0),
+                      "Defensa", personaje.defensa, 8.0),
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,

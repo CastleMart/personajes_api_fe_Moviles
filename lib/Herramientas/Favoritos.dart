@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import '../models/Usuario.dart';
 
+//!Por verificar eliminar
 class Favorito {
   cambiarFavorito(Usuario usuario, bool favorito, String idPersonaje) {}
 }

@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../Herramientas/Botones.dart';
 import '../Herramientas/Buscador.dart';
 import '../Herramientas/CartasPersonajes.dart';
 import '../controllers/PersonajeController.dart';
@@ -19,7 +17,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   PersonajeController connect = PersonajeController();
   final controller = ScrollController();
-  //late Future<List<Personaje>> personajes;
   late List<Personaje> personajesList = [];
   late List<Personaje> personajesListPagina = [];
   int numPagina = 1;
@@ -43,6 +40,7 @@ class _HomeState extends State<Home> {
     });
   }
 
+  ///Método que realiza la lógina de la paginación de los elementos.
   paginarElementos() {
     int cantidadListaTotal = personajesList.length;
     //int cantidadListaPagina = personajesListPagina.length;
@@ -63,6 +61,8 @@ class _HomeState extends State<Home> {
     _isLoadingScroll = personajesListPagina.length < cantidadListaTotal;
   }
 
+  ///Método que obtiene los perosnajes y
+  ///actualiza el estado si se está leyendo o no contenido
   Future<void> obtenerPersonajes() async {
     try {
       numPagina = 1;
@@ -86,10 +86,10 @@ class _HomeState extends State<Home> {
         primarySwatch: Colors.deepPurple,
       ),
       home: Scaffold(
-        //resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text("Personajes Fire Emblem"),
+          title: Text("Personajes de Fire Emblem"),
           actions: [
+            //* Utilización del buscador
             Builder(
               builder: (context) => IconButton(
                 onPressed: () {
@@ -109,6 +109,7 @@ class _HomeState extends State<Home> {
                 color: Colors.white,
                 displacement: 20.0,
                 strokeWidth: 4,
+                //*Impresión de la lista de cartas de los personajes.
                 child: CartasPersonajes.cardListView(
                     personajesListPagina,
                     context.read<PersonajesProvider>().esAdmin,
@@ -125,9 +126,6 @@ class _HomeState extends State<Home> {
                 },
               ),
       ),
-    )
-        //child: Center(
-        //    child: CircularProgressIndicator(backgroundColor: Colors.white))
-        ;
+    );
   }
 }

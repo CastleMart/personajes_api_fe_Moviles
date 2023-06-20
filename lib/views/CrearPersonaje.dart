@@ -16,6 +16,7 @@ class CrearPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Inicialización de los controladores necesarios para llenar los campos.
     TextEditingController nombreText = TextEditingController(text: "");
     TextEditingController fuerzaText = TextEditingController(text: "");
     TextEditingController defenzaText = TextEditingController(text: "");
@@ -23,7 +24,6 @@ class CrearPersonaje extends StatelessWidget {
     TextEditingController imgPixelText = TextEditingController(text: "");
     GlobalKey<FormState> keyForm = GlobalKey<FormState>();
     PersonajeController con = PersonajeController();
-    //Future<List<Personaje>> personajes = con.getPersonajes();
 
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -36,6 +36,7 @@ class CrearPersonaje extends StatelessWidget {
               key: keyForm,
               child: ListView(
                 children: [
+                  //* Recibimiento de los textos de los campos.
                   TextFieldBase(
                     "Nombre",
                     nombreText,
@@ -51,7 +52,7 @@ class CrearPersonaje extends StatelessWidget {
                       onPressed: () async {
                         if (keyForm.currentState!.validate()) {
                           await con.crearPersonaje(
-                              new Personaje(
+                              Personaje(
                                   (CartasPersonajes.idMayor + 1).toString(),
                                   nombreText.text,
                                   fuerzaText.text,
@@ -74,6 +75,4 @@ class CrearPersonaje extends StatelessWidget {
               ),
             )));
   }
-
-  //guardar() {}
 }

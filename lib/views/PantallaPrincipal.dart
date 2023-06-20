@@ -12,6 +12,7 @@ import 'Favoritos_Page.dart';
 import 'Home.dart';
 import 'login.dart';
 
+///Clase que muestra la pantalla principal con sus respecticvas subpáginas.
 class PantallaPrincipal extends StatefulWidget {
   const PantallaPrincipal({super.key});
 
@@ -28,14 +29,19 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   int _paginaActual = 0;
   int idMayor = 0;
 
+  //*Lista de páginas del navegador según el rol del usuario.
   List<Widget> _paginasAdmin = [Home(), CrearPersonaje(), Opciones()];
+
   List<Widget> _paginasUsuario = [Home(), FavoritosPage(), Opciones()];
+
+  //* Íconos a mostrar en el navegador según el tipo de rol del usuario
   List<BottomNavigationBarItem> _navAdmin = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     BottomNavigationBarItem(
         icon: Icon(Icons.add_box), label: "Ingresar Personaje"),
     BottomNavigationBarItem(icon: Icon(Icons.menu), label: "Opciones")
   ];
+
   List<BottomNavigationBarItem> _navUsuario = [
     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
     BottomNavigationBarItem(icon: Icon(Icons.star), label: "Favoritos"),
@@ -47,6 +53,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
 
   @override
   Widget build(BuildContext context) {
+    //*Verificación del tipo de usuario
     if (context.watch<PersonajesProvider>().esAdmin) {
       _tipoNav = _navAdmin;
       _paginas = _paginasAdmin;
@@ -54,6 +61,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
       _tipoNav = _navUsuario;
       _paginas = _paginasUsuario;
     }
+    //*Construcción de la vista principal de la app.
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Mi aplicación',

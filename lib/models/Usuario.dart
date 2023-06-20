@@ -1,3 +1,4 @@
+///Clase usuario que sirve como modelo para un usuario en específico.
 class Usuario {
   String nombreUsuario;
   String password;

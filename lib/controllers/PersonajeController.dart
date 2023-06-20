@@ -6,6 +6,7 @@ import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/models/personaje.dart';
 import "package:http/http.dart" as http;
 
+///Contolador de los diferentes métodos de peticiones de API.
 class PersonajeController {
   static const String _urlEndpoint =
       'https://rc4w8ry6ye.execute-api.us-east-1.amazonaws.com/test/';
@@ -22,30 +23,6 @@ class PersonajeController {
       personajes = [];
       final jsonData = await jsonDecode(response.body);
 
-      for (var item in jsonData) {
-        personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
-            item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"],
-            imgPixel: item["ImgPixel"]));
-      }
-    } else {
-      throw Exception("Falló la conexión.");
-    }
-
-    return personajes;
-  }
-
-  ///Método que regresa todos los personajes disponibles en la API.
-  ///
-  ///Devuelve como resultado [personajes]
-  getPersonajesJson() async {
-    List<Personaje> personajes = [];
-    var url = Uri.parse(_urlEndpoint);
-    final response = await http.get(url);
-
-    if (response.statusCode == 200) {
-      personajes = [];
-      final jsonData = jsonDecode(response.body);
-      return jsonData;
       for (var item in jsonData) {
         personajes.add(Personaje(item["idPersonaje"], item["Nombre"],
             item["Fuerza"], item["Defenza"], item["Img"], item["Favorito"],
@@ -88,12 +65,12 @@ class PersonajeController {
   ///
   /// Recibe un objeto [personaje] para ingresar en la API.
   ///
-  /// Retorna un [response] que arroje el servidor
+  /// Retorna la respuesta que arroje el servidor
   crearPersonaje(Personaje personaje, context) async {
     var url = Uri.parse(_urlEndpoint);
     var body = {
       "idPersonaje": personaje.id,
-      "Defenza": personaje.defenza,
+      "Defenza": personaje.defensa,
       "Nombre": personaje.nombre,
       "Fuerza": personaje.fuerza,
       "Img": personaje.img,
@@ -113,20 +90,12 @@ class PersonajeController {
     var url = Uri.parse(_urlEndpoint);
     var body = {
       "idPersonaje": personaje.id,
-      "Defenza": personaje.defenza,
+      "Defenza": personaje.defensa,
       "Nombre": personaje.nombre,
       "Fuerza": personaje.fuerza,
       "Img": personaje.img,
       "ImgPixel": personaje.imgPixel
     };
-    var response = await http.put(url, body: jsonEncode(body));
-
-    return response;
-  }
-
-  static actualizarPersonajeFavorito(String id, bool favorito) async {
-    var url = Uri.parse(_urlEndpoint);
-    var body = {"idPersonaje": id, "Favorito": favorito};
     var response = await http.put(url, body: jsonEncode(body));
 
     return response;
