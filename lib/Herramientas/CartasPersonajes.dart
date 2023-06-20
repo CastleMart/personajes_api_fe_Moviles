@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:personajes_api_fe/Herramientas/Favoritos.dart';
 import 'package:personajes_api_fe/controllers/PersonajeController.dart';
+import 'package:personajes_api_fe/controllers/UsuariosController.dart';
 import 'package:personajes_api_fe/models/Usuario.dart';
 import 'package:personajes_api_fe/views/VerPersonajeUser.dart';
 import 'package:provider/provider.dart';
@@ -230,6 +231,7 @@ class CartasPersonajes {
   ///Esta función retorna un [Widget].
   static _seleccionarCardUsuario(
       Personaje personaje, Usuario usuario, BuildContext context) {
+    List<String> favoritos = usuario.favoritos;
     //bool admin = true; //;
     if (context.watch<PersonajesProvider>().esAdmin) {
       //! Aquí mando a llamar a mi página actualizar personaje.
@@ -247,20 +249,23 @@ class CartasPersonajes {
     } else {
       if (usuario.favoritos.contains(personaje.id)) {
         return IconButton(
-            onPressed: () {
-              PersonajeController.actualizarPersonajeFavorito(
-                  personaje.id, !personaje.favorito);
-              context.read<PersonajesProvider>().obtenerPersonaje();
+            //TODO: poner función para poner en favoritos.
+            onPressed: () async {
+              favoritos.remove(personaje.id);
+              await UsuariosController.putFavoritos(
+                  usuario.nombreUsuario, favoritos);
             },
             icon: Icon(
               Icons.star,
+              color: Colors.purple,
             ));
       } else {
+        //TODO: poner función para quitar de favoritos.
         return IconButton(
-            onPressed: () {
-              PersonajeController.actualizarPersonajeFavorito(
-                  personaje.id, !personaje.favorito);
-              context.read<PersonajesProvider>().obtenerPersonaje();
+            onPressed: () async {
+              favoritos.add(personaje.id);
+              await UsuariosController.putFavoritos(
+                  usuario.nombreUsuario, favoritos);
             },
             icon: Icon(Icons.star_border));
       }

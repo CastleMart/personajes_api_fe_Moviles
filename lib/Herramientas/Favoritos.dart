@@ -4,27 +4,8 @@ import 'package:personajes_api_fe/main.dart';
 import 'package:personajes_api_fe/providers/personajes_provider.dart';
 import 'package:provider/provider.dart';
 
-class Favorito {
-  static favorito(String id, bool valor, BuildContext context) {
-    return IconButton(
-        onPressed: () {
-          PersonajeController.actualizarPersonajeFavorito(id, !valor);
-          context.read<PersonajesProvider>().obtenerPersonaje();
-        },
-        icon: icono(valor));
-  }
+import '../models/Usuario.dart';
 
-  static icono(bool value) {
-    if (value) {
-      return Icon(
-        Icons.star,
-        color: Colors.purple,
-      );
-    } else {
-      return Icon(
-        Icons.star_border,
-        color: Colors.purple,
-      );
-    }
-  }
+class Favorito {
+  cambiarFavorito(Usuario usuario, bool favorito, String idPersonaje) {}
 }
